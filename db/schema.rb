@@ -10,9 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_29_155410) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_30_161518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "castings", force: :cascade do |t|
+    t.string "role"
+    t.bigint "piece_id", null: false
+    t.bigint "member_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_castings_on_member_id"
+    t.index ["piece_id"], name: "index_castings_on_piece_id"
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.integer "age"
+    t.text "biography"
+    t.string "fonction"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pieces", force: :cascade do |t|
+    t.string "title"
+    t.string "auteur"
+    t.text "description"
+    t.bigint "member_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_pieces_on_member_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.text "description"
+    t.bigint "piece_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["piece_id"], name: "index_reviews_on_piece_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -22,8 +62,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_29_155410) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "castings", "members"
+  add_foreign_key "castings", "pieces"
+  add_foreign_key "pieces", "members"
+  add_foreign_key "reviews", "pieces"
+  add_foreign_key "reviews", "users"
 end
