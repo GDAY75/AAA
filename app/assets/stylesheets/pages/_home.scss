@@ -1,1 +1,40 @@
-// Specific CSS for your home-page
+.banner {
+  margin-right: auto; // pour ne pas passer sous la sidebar fixe
+  width: calc(100% - 220px); // prend toute la largeur sauf la sidebar
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    width: 100%; // en mobile, prend toute la largeur (si sidebar collapsée)
+  }
+}
+
+.banner-images {
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.comedien-photo {
+  aspect-ratio: 1 / 2;
+  height: auto;
+  width: 11.11%; // 9 images = 100 / 9 = ~11.11%
+  object-fit: cover;
+  scroll-snap-align: start;
+  transition: transform 0.3s ease;
+
+  @media (max-width: 1024px) {
+    width: 20%; // plus grand pour tablettes
+  }
+
+  @media (max-width: 768px) {
+    width: 33.33%; // plus grand pour téléphones
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
