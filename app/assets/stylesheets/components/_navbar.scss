@@ -1,8 +1,13 @@
+:root {
+  --sidebar-width: 220px;
+  --sidebar-width-collapsed: 80px;
+}
+
 .sidebar {
   position: fixed;
   top: 0;
   right: 0;
-  width: 220px;
+  width: var(--sidebar-width);
   height: 100vh;
   background: black;
   color: white;
@@ -16,7 +21,7 @@
 }
 
 .sidebar.collapsed {
-  width: 80px;
+  width: var(--sidebar-width-collapsed);
 }
 
 .toggle-wrapper {
@@ -101,7 +106,7 @@
 .dropdown-menu {
   position: absolute;
   top: 80px;
-  right: 220px;
+  right: var(--sidebar-width);
   background: #111;
   border: 1px solid #333;
   box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);

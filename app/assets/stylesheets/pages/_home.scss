@@ -1,11 +1,9 @@
 .banner {
-  margin-right: auto; // pour ne pas passer sous la sidebar fixe
-  width: calc(100% - 220px); // prend toute la largeur sauf la sidebar
   overflow: hidden;
-
-  @media (max-width: 768px) {
-    width: 100%; // en mobile, prend toute la largeur (si sidebar collapsée)
-  }
+  position: relative;
+  top: 0;
+  left: 0;
+  transition: all 0.3s ease;
 }
 
 .banner-images {
@@ -21,20 +19,29 @@
 .comedien-photo {
   aspect-ratio: 1 / 2;
   height: auto;
-  width: 11.11%; // 9 images = 100 / 9 = ~11.11%
+  width: 11.11%;
   object-fit: cover;
   scroll-snap-align: start;
   transition: transform 0.3s ease;
 
-  @media (max-width: 1024px) {
-    width: 20%; // plus grand pour tablettes
-  }
-
-  @media (max-width: 768px) {
-    width: 33.33%; // plus grand pour téléphones
-  }
-
   &:hover {
     transform: scale(1.05);
+  }
+}
+
+@media (max-width: 1024px) {
+  .comedien-photo {
+    width: 20%;
+  }
+}
+
+@media (max-width: 768px) {
+  .comedien-photo {
+    width: 33.33%;
+  }
+
+  .banner {
+    margin-right: 0 !important;
+    width: 100% !important;
   }
 }
