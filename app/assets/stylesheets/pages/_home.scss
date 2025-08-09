@@ -1,3 +1,8 @@
+// Helpers pour forcer min()/max()/clamp() en "vrai CSS" (et pas en fonctions Sass)
+@function css-min($args...)   { @return unquote("min(#{$args})"); }
+@function css-max($args...)   { @return unquote("max(#{$args})"); }
+@function css-clamp($min, $val, $max) { @return unquote("clamp(#{$min}, #{$val}, #{$max})"); }
+
 .banner {
   overflow: hidden;
   position: relative;
@@ -44,4 +49,83 @@
     margin-right: 0 !important;
     width: 100% !important;
   }
+}
+
+/* ===== Bloc titre façon scène avec spotlights ===== */
+.title-spotlights {
+  position: relative;
+  margin: 24px auto 32px;
+  padding: css-clamp(12px, 2vw, 24px) css-clamp(16px, 3vw, 48px);
+  max-width: css-min(1100px, 90vw);
+  text-align: center;
+  border-radius: 16px;
+  background:
+    radial-gradient(80% 120% at 50% -20%, rgba(255,255,255,0.12), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.6)),
+    #0b0b12; /* fond de scène */
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.6),
+    inset 0 0 24px rgba(255, 255, 255, 0.06);
+  overflow: hidden; /* masque les faisceaux */
+  border: 1px solid rgba(255, 215, 0, 0.18); /* finition dorée */
+}
+
+/* Titre (Carattere déjà appliquée globalement) */
+.asso-title {
+  margin: 0;
+  font-size: css-clamp(2rem, 6vw, 6rem);
+  line-height: 1.1;
+  color: gold;
+  text-shadow:
+    0 2px 2px rgba(0,0,0,0.4),
+    0 6px 18px rgba(255, 220, 160, 0.35),
+    0 0 32px rgba(255, 50, 50, 0.18);
+}
+
+/* ===== Spotlights croisés (base) ===== */
+.title-spotlights::before,
+.title-spotlights::after {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  width: 120vmax;   /* faisceaux très larges */
+  height: 120vmax;
+  pointer-events: none;
+  transform-origin: top center;
+  filter: blur(6px);
+  opacity: 0.9;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(ellipse 70% 12% at 50% 0%,
+      rgba(255,255,255,0.18), rgba(255,255,255,0.06) 35%, transparent 60%),
+    linear-gradient(to bottom,
+      rgba(255,255,255,0.18),
+      rgba(255,0,0,0.12) 40%,
+      rgba(255,215,0,0.12) 75%,
+      transparent 90%);
+}
+
+.title-spotlights::before { transform: rotate(-24deg) translateX(-50%); }
+.title-spotlights::after  { transform: rotate( 24deg) translateX(-50%); }
+
+/* ===== Variante animée (balayage) ===== */
+.title-spotlights.is-animated::before,
+.title-spotlights.is-animated::after {
+  animation: spotlightSweep 6.5s ease-in-out infinite alternate;
+}
+.title-spotlights.is-animated::after {
+  animation-delay: 0.8s;
+}
+
+@keyframes spotlightSweep {
+  0%   { transform: rotate(-32deg) translateX(-50%); }
+  50%  { transform: rotate(  0deg) translateX(-50%); }
+  100% { transform: rotate( 32deg) translateX(-50%); }
+}
+
+/* Accessibilité : désactive l’anim si l’utilisateur préfère moins d’animations */
+@media (prefers-reduced-motion: reduce) {
+  .title-spotlights.is-animated::before,
+  .title-spotlights.is-animated::after { animation: none; }
 }
