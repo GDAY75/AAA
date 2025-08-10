@@ -21,30 +21,44 @@
   scroll-snap-type: x mandatory;
 }
 
+.comedien-container {
+  position: relative;
+  overflow: hidden;
+  /* on remplace l'ancienne largeur % de .comedien-photo par un flex-basis sur le conteneur */
+  flex: 0 0 11.11%; /* 9 par ligne */
+}
+
+/* Image */
 .comedien-photo {
-  aspect-ratio: 1 / 2;
+  display: block;
+  width: 100%;
   height: auto;
-  width: 11.11%;
+  aspect-ratio: 1 / 2;   /* tu gardes ton ratio */
   object-fit: cover;
-  scroll-snap-align: start;
   transition: transform 0.3s ease;
-
-  &:hover {
-    transform: scale(1.05);
-  }
 }
 
-@media (max-width: 1024px) {
-  .comedien-photo {
-    width: 20%;
-  }
+/* Bandeau prénom en bas, visible au hover */
+.comedien-name {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 8px 10px;
+  text-align: center;
+  color: gold;
+  font-weight: 600;
+  font-size: 4rem;
+  background: linear-gradient(400deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 50%);
+  opacity: 0;
+  transform: translateY(10%);
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
+
+.comedien-container:hover .comedien-photo { transform: scale(1.05); }
+.comedien-container:hover .comedien-name  { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 768px) {
-  .comedien-photo {
-    width: 33.33%;
-  }
-
   .banner {
     margin-right: 0 !important;
     width: 100% !important;
