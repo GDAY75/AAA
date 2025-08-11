@@ -58,10 +58,20 @@
 .comedien-container:hover .comedien-photo { transform: scale(1.05); }
 .comedien-container:hover .comedien-name  { opacity: 1; transform: translateY(0); }
 
+@media (max-width: 1750px) {
+  .comedien-name {
+    font-size: 1.6rem;
+  }
+}
+
 @media (max-width: 768px) {
   .banner {
     margin-right: 0 !important;
     width: 100% !important;
+  }
+
+  .comedien-name {
+    font-size: 0.7rem;
   }
 }
 
