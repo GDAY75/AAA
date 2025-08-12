@@ -9,7 +9,9 @@
       <span class="comedien-name">François</span>
     </div>
     <div class="comedien-container">
-      <%= image_tag "GIL.jpg", alt: "Gil", class: "comedien-photo" %>
+      <%= link_to member_path(Member.find_by(first_name: "Gil")) do %>
+        <%= image_tag "GIL.jpg", alt: "GIL", class: "comedien-photo" %>
+      <% end %>
       <span class="comedien-name">Gil</span>
     </div>
     <div class="comedien-container">
@@ -44,4 +46,3 @@
     <h1 class="asso-title">Association des Acteurs Anonymes</h1>
   </div>
 </div>
-
