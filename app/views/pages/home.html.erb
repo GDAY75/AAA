@@ -1,43 +1,13 @@
 <div class="banner" data-sidebar-target="banner">
   <div class="banner-images">
-    <div class="comedien-container">
-      <%= image_tag "ADELINE.jpg", alt: "Adeline", class: "comedien-photo" %>
-      <span class="comedien-name">Adeline</span>
-    </div>
-    <div class="comedien-container">
-      <%= image_tag "FRANCOIS.jpg", alt: "François", class: "comedien-photo" %>
-      <span class="comedien-name">François</span>
-    </div>
-    <div class="comedien-container">
-      <%= link_to member_path(Member.find_by(first_name: "Gil")) do %>
-        <%= image_tag "GIL.jpg", alt: "GIL", class: "comedien-photo" %>
-      <% end %>
-      <span class="comedien-name">Gil</span>
-    </div>
-    <div class="comedien-container">
-      <%= image_tag "HELENA.jpg", alt: "Héléna", class: "comedien-photo" %>
-      <span class="comedien-name">Héléna</span>
-    </div>
-    <div class="comedien-container">
-      <%= image_tag "MANON.jpg", alt: "Manon", class: "comedien-photo" %>
-      <span class="comedien-name">Manon</span>
-    </div>
-    <div class="comedien-container">
-      <%= image_tag "MARIE.jpg", alt: "Marie", class: "comedien-photo" %>
-      <span class="comedien-name">Marie</span>
-    </div>
-    <div class="comedien-container">
-      <%= image_tag "MARION.jpg", alt: "Marion", class: "comedien-photo" %>
-      <span class="comedien-name">Marion</span>
-    </div>
-    <div class="comedien-container">
-      <%= image_tag "NICOLAS.jpg", alt: "Nicolas", class: "comedien-photo" %>
-      <span class="comedien-name">Nicolas</span>
-    </div>
-    <div class="comedien-container">
-      <%= image_tag "VINCENT.jpg", alt: "Vincent", class: "comedien-photo" %>
-      <span class="comedien-name">Vincent</span>
-    </div>
+    <% @members.each do |member| %>
+      <div class="comedien-container">
+        <%= link_to member_path(member) do %>
+          <%= image_tag member_asset_image(member), alt: member.first_name, class: "comedien-photo" %>
+        <% end %>
+        <span class="comedien-name"><%= member.first_name %></span>
+      </div>
+    <% end %>
   </div>
 
   <div class="title-spotlights is-animated">
@@ -46,3 +16,4 @@
     <h1 class="asso-title">Association des Acteurs Anonymes</h1>
   </div>
 </div>
+
