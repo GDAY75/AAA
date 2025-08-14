@@ -72,30 +72,32 @@
   margin: 15px 0;
 }
 
+.nav-link .icon-only {
+  display: none;
+}
+
+.nav-link .link-text {
+  display: inline;
+}
+
+/* En mode réduit : icône visible, texte caché */
+.sidebar.collapsed .nav-link .icon-only {
+  display: inline;
+}
+
+.sidebar.collapsed .nav-link .link-text {
+  display: none;
+}
+
 .nav-link {
   display: block;
-  color: white;
+  color: gold;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 18px;
+  font-weight: bolder;
+  font-size: 48px;
   padding: 12px 0;
   position: relative;
   overflow: hidden;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,0,0,0.4));
-  transition: all 0.4s ease;
-}
-
-.nav-link:hover::after {
-  left: 100%;
 }
 
 .avatar {

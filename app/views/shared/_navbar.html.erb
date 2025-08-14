@@ -26,6 +26,12 @@
           </div>
         </li>
       <% else %>
+        <li>
+          <%= link_to members_path, class: "nav-link" do %>
+            <i class="fas fa-users icon-only"></i>
+            <span class="link-text">La Troupe</span>
+          <% end %>
+        </li>
         <li><%= link_to "Connexion", new_user_session_path, class: "nav-link" %></li>
       <% end %>
     </ul>
