@@ -1,0 +1,89 @@
+.pieces-index {
+  padding: 16px;
+}
+
+.pieces-index h1 {
+  margin: 16px 0 24px;
+  text-align: center;
+}
+
+.pieces-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 cards par ligne */
+  gap: 100px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr; /* 1 par ligne en mobile/tablette */
+  }
+}
+
+.piece-card {
+  display: block;
+  background: #0b0b12;             /* fond scène sombre */
+  color: #fff;
+  border-radius: 14px;
+  text-decoration: none;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255, 215, 0, 0.18); /* liseré doré discret */
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.45);
+    border-color: rgba(255, 215, 0, 0.35);
+  }
+}
+
+.poster-wrap {
+  position: relative;
+  aspect-ratio: 2 / 3;  /* affichette verticale */
+  background: radial-gradient(80% 120% at 50% -20%, rgba(255,255,255,0.08), transparent 60%),
+              #111; /* fallback si pas d'image */
+
+  img, .poster-placeholder {
+    width: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .poster-placeholder {
+    display: grid;
+    place-items: center;
+    color: #aaa;
+    font-size: 0.95rem;
+  }
+}
+
+/* Badge année façon pastille dorée */
+.year-badge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 6px 10px;
+  background: rgba(255, 215, 0, 0.85);
+  color: #2a1a00;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+  border: 1px solid rgba(180, 130, 0, 0.6);
+}
+
+/* Titre sous l’affiche */
+.piece-title {
+  padding: 12px 14px;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  text-align: center;
+}
+
+/* Optionnel : légère “rampe” lumineuse en haut de la carte */
+.piece-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), transparent 40%);
+  mix-blend-mode: screen;
+}

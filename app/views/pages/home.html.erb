@@ -1,12 +1,14 @@
 <div class="banner" data-sidebar-target="banner">
   <div class="banner-images">
     <% @members.each do |member| %>
-      <div class="comedien-container">
-        <%= link_to member_path(member) do %>
-          <%= image_tag member_asset_image(member), alt: member.first_name, class: "comedien-photo" %>
-        <% end %>
-        <span class="comedien-name"><%= member.first_name %></span>
-      </div>
+      <% if member.fonction == "Comédien" %>
+        <div class="comedien-container">
+          <%= link_to member_path(member) do %>
+            <%= image_tag member_asset_image(member), alt: member.first_name, class: "comedien-photo" %>
+          <% end %>
+          <span class="comedien-name"><%= member.first_name %></span>
+        </div>
+      <% end %>
     <% end %>
   </div>
 
@@ -16,4 +18,3 @@
     <h1 class="asso-title">Association des Acteurs Anonymes</h1>
   </div>
 </div>
-

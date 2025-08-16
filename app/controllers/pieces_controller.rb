@@ -3,7 +3,7 @@ class PiecesController < ApplicationController
   before_action :set_piece, only: :show
 
   def index
-    @pieces = Piece.order(created_at: :desc)
+    @pieces = Piece.order(year: :desc, created_at: :desc)
   end
 
   def show

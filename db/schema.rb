@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_12_203953) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_16_081353) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_12_203953) do
     t.bigint "member_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "year"
+    t.string "affiche"
     t.index ["member_id"], name: "index_pieces_on_member_id"
   end
 

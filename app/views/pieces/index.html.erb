@@ -1,1 +1,23 @@
-<p>coucou les pièces</p>
+<div class="pieces-index">
+  <h1>Les Pièces</h1>
+
+  <% if @pieces.any? %>
+    <div class="pieces-grid">
+      <% @pieces.each do |piece| %>
+        <%= link_to piece_path(piece), class: "piece-card" do %>
+          <div class="poster-wrap">
+            <% if piece.affiche.present? %>
+              <%= image_tag piece.affiche, alt: piece.title %>
+            <% else %>
+              <div class="poster-placeholder">Affiche à venir</div>
+            <% end %>
+            <div class="year-badge"><%= piece.year %></div>
+          </div>
+          <div class="piece-title"><%= piece.title %></div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <p>Aucune pièce pour le moment.</p>
+  <% end %>
+</div>
