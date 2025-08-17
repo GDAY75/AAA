@@ -1,23 +1,27 @@
-<div class="pieces-index">
-  <h1>Les Pièces</h1>
-
-  <% if @pieces.any? %>
-    <div class="pieces-grid">
-      <% @pieces.each do |piece| %>
-        <%= link_to piece_path(piece), class: "piece-card" do %>
-          <div class="poster-wrap">
-            <% if piece.affiche.present? %>
-              <%= image_tag piece.affiche, alt: piece.title %>
-            <% else %>
-              <div class="poster-placeholder">Affiche à venir</div>
-            <% end %>
-            <div class="year-badge"><%= piece.year %></div>
-          </div>
-          <div class="piece-title"><%= piece.title %></div>
+<div class="pieces-wrapper" data-sidebar-target="pieces">
+  <div class="title-spotlights is-animated">
+    <div class="spotlight"></div>
+    <div class="spotlight"></div>
+    <h1 class="asso-title">Les Pièces</h1>
+  </div>
+  <div class="pieces-index">
+    <% if @pieces.any? %>
+      <div class="pieces-grid">
+        <% @pieces.each do |piece| %>
+          <%= link_to piece_path(piece), class: "piece-card" do %>
+            <div class="poster-wrap">
+              <% if piece.affiche.present? %>
+                <%= image_tag piece.affiche, alt: piece.title %>
+              <% else %>
+                <div class="poster-placeholder">Affiche à venir</div>
+              <% end %>
+            <div class="piece-year"><%= piece.year %></div>
+            </div>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-  <% else %>
-    <p>Aucune pièce pour le moment.</p>
-  <% end %>
+      </div>
+    <% else %>
+      <p>Aucune pièce pour le moment.</p>
+    <% end %>
+  </div>
 </div>

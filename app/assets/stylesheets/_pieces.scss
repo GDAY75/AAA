@@ -1,16 +1,17 @@
 .pieces-index {
-  padding: 16px;
+  padding-inline: 3rem;
+  margin-bottom: 16px;
 }
 
-.pieces-index h1 {
-  margin: 16px 0 24px;
+.pieces-wrapper h1 {
+  margin-top: 16px;
   text-align: center;
 }
 
 .pieces-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 cards par ligne */
-  gap: 100px;
+  grid-template-columns: repeat(3, 1fr); /* 2 cards par ligne */
+  gap: 3rem;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr; /* 1 par ligne en mobile/tablette */
@@ -55,27 +56,10 @@
   }
 }
 
-/* Badge année façon pastille dorée */
-.year-badge {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  padding: 6px 10px;
-  background: rgba(255, 215, 0, 0.85);
-  color: #2a1a00;
-  border-radius: 999px;
-  font-weight: 700;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
-  border: 1px solid rgba(180, 130, 0, 0.6);
-}
-
-/* Titre sous l’affiche */
-.piece-title {
-  padding: 12px 14px;
-  font-size: 1.05rem;
-  line-height: 1.25;
+.piece-year {
+  font-size: 4rem;
   text-align: center;
+  font-weight: bolder;
 }
 
 /* Optionnel : légère “rampe” lumineuse en haut de la carte */
@@ -86,4 +70,16 @@
   pointer-events: none;
   background: linear-gradient(180deg, rgba(255,255,255,0.06), transparent 40%);
   mix-blend-mode: screen;
+}
+
+.pieces-wrapper {
+  transition: all 0.3s ease; /* fluidité quand la sidebar toggle */
+}
+
+/* Sur mobile, ignorer la marge imposée par la sidebar */
+@media (max-width: 768px) {
+  .pieces-wrapper {
+    margin-right: 0 !important;
+    width: 100% !important;
+  }
 }
