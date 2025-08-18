@@ -64,16 +64,32 @@
   }
 }
 
+/* ===== Mobile : 3 lignes × 3 colonnes ===== */
 @media (max-width: 768px) {
-  .banner {
-    margin-right: 0 !important;
-    width: 100% !important;
+  .banner-images {
+    /* On passe de flex horizontal à une grille 3x3 */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0; /* mets 6px si tu veux un espace: ex. gap: 6px; */
+    overflow-x: visible;     /* plus de scroll horizontal */
+    scroll-snap-type: none;  /* on désactive le snap horizontal */
+    justify-content: stretch;
   }
 
-  .comedien-name {
-    font-size: 0.7rem;
+  /* On annule les largeurs/flex-basis posés pour la version desktop */
+  .comedien-container {
+    flex: initial;
+    width: 100%;
+  }
+
+  .comedien-photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: top;
   }
 }
+
 
 /* ===== Bloc titre façon scène avec spotlights ===== */
 .title-spotlights {
