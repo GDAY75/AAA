@@ -1,0 +1,24 @@
+<div class="piece-show" data-sidebar-target="pieces">
+
+  <%# --- Bannière : on utilise l'affiche v2 nommée "<TITRE> 2.JPG" --- %>
+  <% banner_name = @piece.title.parameterize.underscore + "_2.jpg" %>
+  <div class="piece-banner" style="background-image: url('<%= asset_path(banner_name) %>')">
+    <h1 class="piece-banner__title"><%= @piece.title %></h1>
+  </div>
+
+  
+
+  <div class="piece-content">
+    <% if @piece.respond_to?(:description) && @piece.description.present? %>
+      <div class="piece-desc">
+        <%= simple_format(@piece.description) %>
+      </div>
+    <% end %>
+
+    <%# Auteur %>
+    <% author = @piece.try(:author) || @piece.try(:auteur) %>
+    <% if author.present? %>
+      <p class="piece-author"><span>Auteur :</span> <%= author %></p>
+    <% end %>
+  </div>
+</div>
