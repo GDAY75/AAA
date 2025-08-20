@@ -6,7 +6,7 @@
     <h1 class="piece-banner__title"><%= @piece.title %></h1>
   </div>
 
-  
+
 
   <div class="piece-content">
     <% if @piece.respond_to?(:description) && @piece.description.present? %>
@@ -18,7 +18,7 @@
     <%# Auteur %>
     <% author = @piece.try(:author) || @piece.try(:auteur) %>
     <% if author.present? %>
-      <p class="piece-author"><span>Auteur :</span> <%= author %></p>
+      <p class="piece-author"><span>Auteur : </span>&nbsp;<%= author %></p>
     <% end %>
   </div>
 </div>
