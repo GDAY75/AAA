@@ -135,6 +135,9 @@
   padding: 16px 18px;
   color: #e9e2d0;
   font-size: clamp(1.5rem, 3vw, 10rem);
+  display: flex;
+  align-items: center;
+  gap: 12px; /* espace entre le texte et l’image */
 
   span {
     font-weight: 700;
@@ -142,7 +145,37 @@
   }
 }
 
-/* Mobile : marges réduites */
-@media (max-width: 768px) {
+.star-photo {
+  display: inline-block;
+}
+
+.star-img {
+  width: 25rem;   /* taille de l’étoile */
+  height: 25rem;
+  object-fit: cover;
+  clip-path: polygon(
+    50% 0%,   61% 35%, 98% 35%,
+    68% 57%, 79% 91%, 50% 70%,
+    21% 91%, 32% 57%, 2% 35%,
+    39% 35%
+  ); /* forme étoile */
+}
+
+@media (max-width: 900px) {
+  .piece-author {
+    flex-direction: column;     /* empile : texte puis image */
+    align-items: flex-start;    /* aligne à gauche (ou center si tu préfères) */
+    gap: 8px;
+  }
+
+  .star-photo {
+    margin-top: 4px;            /* petit espace sous le texte */
+  }
+
   .piece-content { padding: 0 4px 16px; }
+
+  .star-img {
+    width: 20rem;
+    height: 20rem;
+  }
 }

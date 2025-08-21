@@ -20,5 +20,14 @@
     <% if author.present? %>
       <p class="piece-author"><span>Auteur : </span>&nbsp;<%= author %></p>
     <% end %>
+    <p class="piece-author">
+      <span>Mise en scène : </span>&nbsp;
+      <%= @piece.member.first_name %>&nbsp;<%= @piece.member.last_name.titleize %>
+
+      <span class="star-photo">
+        <%= image_tag @piece.title.parameterize.underscore + "_3.jpg", alt: "Mise en scène", class: "star-img" %>
+      </span>
+    </p>
+
   </div>
 </div>
