@@ -1,1 +1,20 @@
-<p>coucou les members</p>
+<div class="pieces-wrapper" data-sidebar-target="members">
+  <div class="title-spotlights is-animated">
+    <div class="spotlight"></div>
+    <div class="spotlight"></div>
+    <h1 class="asso-title">La Troupe</h1>
+  </div>
+  <div class="members-index">
+    <% @members.each do |member| %>
+      <div class="member-card">
+        <div class="member-photo">
+          <%= image_tag "#{member.first_name.downcase}2.jpg", alt: member.first_name, class: "photo" %>
+        </div>
+        <div class="member-info">
+          <h2 class="member-name"><%= member.first_name.capitalize %> <%= member.last_name.titleize %></h2>
+          <p class="member-role"><%= member.fonction %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<div>
