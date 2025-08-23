@@ -2,7 +2,7 @@ class MembersController < ApplicationController
   skip_before_action :authenticate_user!
 
   def index
-    @members = Member.all
+    @members = Member.order(:first_name)
   end
 
   def show

@@ -6,15 +6,34 @@
   </div>
   <div class="members-index">
     <% @members.each do |member| %>
-      <div class="member-card">
-        <div class="member-photo">
-          <%= image_tag "#{member.first_name.downcase}2.jpg", alt: member.first_name, class: "photo" %>
-        </div>
-        <div class="member-info">
-          <h2 class="member-name"><%= member.first_name.capitalize %> <%= member.last_name.titleize %></h2>
-          <p class="member-role"><%= member.fonction %></p>
-        </div>
-      </div>
+      <% if (member.fonction == "Metteur en scène") %>
+        <%= link_to member_path(member), class: "member-link" do %>
+          <div class="member-card">
+            <div class="member-photo">
+              <%= image_tag "#{member.first_name.downcase}2.jpg", alt: member.first_name, class: "photo" %>
+            </div>
+            <div class="member-info">
+              <h2 class="member-name"><%= member.first_name.capitalize %> <%= member.last_name.titleize %></h2>
+              <p class="member-role"><%= member.fonction %></p>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+    <% @members.each do |member| %>
+      <% if (member.fonction == "Comédien" || member.fonction == "Comédienne") %>
+        <%= link_to member_path(member), class: "member-link" do %>
+          <div class="member-card">
+            <div class="member-photo">
+              <%= image_tag "#{member.first_name.downcase}2.jpg", alt: member.first_name, class: "photo" %>
+            </div>
+            <div class="member-info">
+              <h2 class="member-name"><%= member.first_name.capitalize %> <%= member.last_name.titleize %></h2>
+              <p class="member-role"><%= member.fonction %></p>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
 <div>

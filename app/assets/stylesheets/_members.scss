@@ -41,12 +41,12 @@
 }
 
 .member-info {
-  padding: 16px;
+  padding-top: 2rem;
   color: white;
 
   .member-name {
     font-family: 'Carattere', cursive; /* ta police théâtrale */
-    font-size: 2.3rem;
+    font-size: 2.2rem;
     font-weight: bolder;
     margin-bottom: 8px;
     color: gold;
@@ -54,11 +54,17 @@
   }
 
   .member-role {
-    font-size: 2.3rem;
+    font-size: 2.2rem;
     font-weight: bolder;
     color: #ddd;
     font-style: italic;
   }
+}
+
+.member-link {
+  text-decoration: none !important;
+  color: inherit !important;
+  display: block;
 }
 
 /* Responsive */

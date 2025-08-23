@@ -1,7 +1,7 @@
 <div class="banner" data-sidebar-target="banner">
   <div class="banner-images">
     <% @members.each do |member| %>
-      <% if member.fonction == "Comédien" %>
+      <% if (member.fonction == "Comédien" || member.fonction == "Comédienne") %>
         <div class="comedien-container">
           <%= link_to member_path(member) do %>
             <%= image_tag member_asset_image(member), alt: member.first_name, class: "comedien-photo" %>
