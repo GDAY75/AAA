@@ -28,6 +28,19 @@
         <%= image_tag @piece.title.parameterize.underscore + "_3.jpg", alt: "Mise en scène", class: "star-img" %>
       </span>
     </p>
+    
+    <h2>Distribution</h2>
+    <ul>
+      <% @castings.each do |casting| %>
+        <li>
+          <strong><%= casting.role %></strong>
+          — <%= casting.member.first_name %> <%= casting.member.last_name %>
+          <% if casting.photo.present? %>
+            <%= image_tag casting.photo, alt: casting.role, class: "casting-photo" %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
 
   </div>
 </div>

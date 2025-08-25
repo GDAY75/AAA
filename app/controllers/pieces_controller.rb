@@ -7,6 +7,7 @@ class PiecesController < ApplicationController
   end
 
   def show
+    @castings = @piece.castings.includes(:member)
   end
 
   private
