@@ -161,6 +161,25 @@
   ); /* forme étoile */
 }
 
+.casting-photo-oval {
+  position: relative;
+  width: 20rem;
+  height: 25rem; /* portrait vertical */
+  margin: 0 auto 12px;
+  border: 4px solid gold;
+  border-radius: 50% / 50%; /* effet camée ovale */
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.6), inset 0 0 12px rgba(255,215,0,0.25);
+  background: #111; /* fond de scène si image transparente */
+}
+
+.oval-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center; /* on met l’accent sur le visage */
+}
+
 @media (max-width: 900px) {
   .piece-author {
     flex-direction: column;     /* empile : texte puis image */
@@ -176,6 +195,11 @@
 
   .star-img {
     width: 20rem;
+    height: 20rem;
+  }
+
+  .casting-photo-oval {
+    width: 16rem;
     height: 20rem;
   }
 }
