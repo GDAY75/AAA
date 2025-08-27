@@ -32,6 +32,11 @@
     <p class="piece-author">
       <span>Comédiens : </span>
       <ul>
+        <% @members.each do |member| %>
+          <li><%= member.first_name %> <%= member.last_name.titleize %></li>
+        <% end %>
+      </ul>
+      <ul>
         <% @castings.each do |casting| %>
           <li>
             <strong><%= casting.role %></strong>
