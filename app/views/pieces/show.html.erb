@@ -33,14 +33,13 @@
       <span>Comédiens : </span>
       <ul>
         <% @members.each do |member| %>
-          <li><%= member.first_name %> <%= member.last_name.titleize %></li>
+          <p class="piece-comedien"><%= member.first_name %> <%= member.last_name.titleize %></p>
         <% end %>
       </ul>
       <ul>
         <% @castings.each do |casting| %>
           <li>
             <strong><%= casting.role %></strong>
-            — <%= casting.member.first_name %> <%= casting.member.last_name.titleize %>
             <% if casting.photo.present? %>
               <div class="casting-photo-oval">
                 <%= image_tag casting.photo, alt: casting.role, class: "oval-img" %>
