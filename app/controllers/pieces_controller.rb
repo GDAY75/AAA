@@ -7,7 +7,7 @@ class PiecesController < ApplicationController
   end
 
   def show
-    @castings = @piece.castings
+    @castings = @piece.castings.includes(:member)
     @members  = @piece.members.distinct.order(:first_name)
   end
 

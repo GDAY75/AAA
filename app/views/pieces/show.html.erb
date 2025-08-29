@@ -33,19 +33,19 @@
       <span>Comédiens : </span>
       <ul>
         <% @members.each do |member| %>
-          <p class="piece-comedien"><%= member.first_name %> <%= member.last_name.titleize %></p>
-        <% end %>
-      </ul>
-      <ul>
-        <% @castings.each do |casting| %>
-          <li>
-            <strong><%= casting.role %></strong>
-            <% if casting.photo.present? %>
-              <div class="casting-photo-oval">
-                <%= image_tag casting.photo, alt: casting.role, class: "oval-img" %>
-              </div>
-            <% end %>
-          </li>
+          <div class="piece-comedien">
+            <p><%= member.first_name %> <%= member.last_name.titleize %></p>
+            <ul class="member-roles">
+              <% member.castings.where(piece: @piece).each do |casting| %>
+                <% if casting.photo.present? %>
+                  <div class="casting-photo-oval">
+                    <%= image_tag casting.photo, alt: casting.role, class: "oval-img" %>
+                  </div>
+                <% end %>
+                <li><%= casting.role %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
       </ul>
     </p>
