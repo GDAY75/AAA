@@ -35,16 +35,19 @@
         <% @members.each do |member| %>
           <div class="piece-comedien">
             <p><%= member.first_name %> <%= member.last_name.titleize %></p>
-            <ul class="member-roles">
+            <p>dans les rôles de :</p>
+            <div class="member-roles">
               <% member.castings.where(piece: @piece).each do |casting| %>
-                <% if casting.photo.present? %>
-                  <div class="casting-photo-oval">
-                    <%= image_tag casting.photo, alt: casting.role, class: "oval-img" %>
-                  </div>
-                <% end %>
-                <li><%= casting.role %></li>
+                <div class="member-role">
+                  <% if casting.photo.present? %>
+                    <div class="casting-photo-oval">
+                      <%= image_tag casting.photo, alt: casting.role, class: "oval-img" %>
+                    </div>
+                  <% end %>
+                  <div class="role-name"><%= casting.role %></div>
+                </div>
               <% end %>
-            </ul>
+            </div>
           </div>
         <% end %>
       </ul>

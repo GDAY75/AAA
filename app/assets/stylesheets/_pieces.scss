@@ -149,6 +149,7 @@
   color: #e9e2d0;
   font-size: clamp(1.5rem, 3vw, 10rem);
   text-align: center;
+  margin-bottom: 4rem;
 }
 
 .star-photo {
@@ -184,6 +185,27 @@
   height: 100%;
   object-fit: cover;
   object-position: top center; /* on met l’accent sur le visage */
+}
+
+.member-roles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.role-name {
+  color: #ffd87a;
+}
+
+@media (max-width: 1300px) {
+  .member-roles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 800px) {
+  .member-roles {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 900px) {
