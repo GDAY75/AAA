@@ -35,7 +35,12 @@
         <% @members.each do |member| %>
           <div class="piece-comedien">
             <p><%= member.first_name %> <%= member.last_name.titleize %></p>
-            <p>dans les rôles de :</p>
+            <% roles_count = member.castings.where(piece: @piece).count %>
+            <% if roles_count > 1 %>
+              <p>dans les rôles de :</p>
+            <% else %>
+              <p>dans le rôle de :</p>
+            <% end %>
             <div class="member-roles">
               <% member.castings.where(piece: @piece).each do |casting| %>
                 <div class="member-role">
