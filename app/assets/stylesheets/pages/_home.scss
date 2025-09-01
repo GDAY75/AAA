@@ -19,6 +19,7 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  margin-bottom: 4rem;
 }
 
 .comedien-container {
@@ -95,6 +96,7 @@
 .title-spotlights {
   position: relative;
   margin: 24px auto 32px;
+  margin-bottom: 4rem;
   padding: css-clamp(12px, 1vw, 1px) css-clamp(16px, 3vw, 48px);
   max-width: css-min(1100px, 90vw);
   text-align: center;
