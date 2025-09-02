@@ -171,3 +171,10 @@
   .title-spotlights.is-animated::before,
   .title-spotlights.is-animated::after { animation: none; }
 }
+
+.presentation {
+  img {
+    height: 50rem;
+    max-height: 500px;
+  }
+}
