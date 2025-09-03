@@ -173,8 +173,48 @@
 }
 
 .presentation {
-  img {
-    height: 50rem;
-    max-height: 500px;
+  max-width: 1700px;
+  margin: 60px auto;
+  padding: 30px 24px;
+  background: radial-gradient(circle at top, rgba(255,215,0,0.08), rgba(0,0,0,0.9));
+  border: 2px solid rgba(255,215,0,0.25);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7), inset 0 0 20px rgba(255,215,0,0.1);
+  color: #eee;
+  line-height: 1.6;
+  font-size: 1.1rem;
+
+  display: grid;
+  gap: 28px;
+
+  p {
+    font-family: 'Carattere', cursive; /* cohérent avec ton thème */
+    color: #e9e2d0;
+    font-size: clamp(1.5rem, 3vw, 10rem);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+    margin: 0;
+    text-align: justify;
+  }
+
+  .presentation-photo {
+    display: inline-block;      /* shrink-wrap sur le contenu */
+    max-width: 80%;             /* ne dépasse jamais 80% de la largeur dispo */
+    margin: 0 auto 24px;
+    border: 3px solid gold;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.8);
+    /* pas de max-height ici, sinon ça coupe */
+    overflow: visible;          /* important: ne pas rogner */
+  }
+
+  /* L'image se limite en hauteur, conserve le ratio et dicte la taille du cadre */
+  .presentation-photo img {
+    display: block;             /* supprime l'espace inline */
+    height: auto;               /* conserve le ratio */
+    max-height: 40rem;          /* limite de hauteur */
+    border-radius: 12px;
+    width: auto;                /* laisse l'image choisir sa largeur selon son ratio */
+    max-width: 100%;            /* mais ne dépasse pas le cadre (80% de la page) */
+    object-fit: contain;        /* sécurité, pas de déformation */
   }
 }
