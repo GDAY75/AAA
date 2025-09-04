@@ -2,8 +2,8 @@
   <div class="sidebar collapsed" data-sidebar-target="sidebar">
     <div class="toggle-wrapper">
       <button data-action="click->sidebar#toggle" class="toggle-btn">
-        <i class="fa-solid fa-chevron-left"></i>
-        <span class="fa-solid fa-chevron-right"></span>
+        <i data-sidebar-target="chevronLeft" class="fa-solid fa-chevron-left"></i>
+        <i data-sidebar-target="chevronRight" class="fa-solid fa-chevron-right"></i>
       </button>
     </div>
 
@@ -39,7 +39,9 @@
             <span class="link-text">Les Pièces</span>
           <% end %>
         </li>
-        <li><%= link_to "Connexion", new_user_session_path, class: "nav-link" %></li>
+        <%# <li>
+          <%# <%= link_to "Connexion", new_user_session_path, class: "nav-link" %>
+        <%# </li> %>
       <% end %>
     </ul>
   </div>

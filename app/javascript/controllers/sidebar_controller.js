@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["sidebar", "banner", "pieces", "members"] // ← on ajoute pieces
+  static targets = ["sidebar", "banner", "pieces", "chevronLeft", "chevronRight"]
 
   connect() {
     this.updateLayout()
@@ -14,6 +14,13 @@ export default class extends Controller {
 
   updateLayout() {
     const isCollapsed = this.sidebarTarget.classList.contains("collapsed")
+
+    // icônes chevrons
+    if (this.hasChevronLeftTarget && this.hasChevronRightTarget) {
+      this.chevronLeftTarget.style.display  = isCollapsed ? "inline-block" : "none"
+      this.chevronRightTarget.style.display = isCollapsed ? "none" : "inline-block"
+    }
+
     const width = isCollapsed ? "80px" : "220px"
 
     // bannière (si présente sur la page)
