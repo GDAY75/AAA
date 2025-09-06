@@ -5,3 +5,7 @@
     <h1 class="asso-title"><%= @member.first_name.capitalize %>&nbsp;&nbsp;<%= @member.last_name.titleize %></h1>
   </div>
 </div>
+
+<% @castings.each do |casting| %>
+  <p><%= casting.piece.title %> : <%= casting.role %></p>
+<% end %>
