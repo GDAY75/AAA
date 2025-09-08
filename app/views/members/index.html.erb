@@ -21,7 +21,25 @@
       <% end %>
     <% end %>
     <% @members.each do |member| %>
-      <% if (member.fonction == "Comédien" || member.fonction == "Comédienne") %>
+      <% if ((member.fonction == "Comédien" || member.fonction == "Comédienne") && member.active == true) %>
+        <%= link_to member_path(member), class: "member-link" do %>
+          <div class="member-card">
+            <div class="member-photo">
+              <%= image_tag "#{member.first_name.downcase}2.jpg", alt: member.first_name, class: "photo" %>
+            </div>
+            <div class="member-info">
+              <h2 class="member-name"><%= member.first_name.capitalize %> <%= member.last_name.titleize %></h2>
+              <p class="member-role"><%= member.fonction %></p>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+  <p class="member-old"><span>Anciens Membres :</span></p>
+  <div class="members-index">
+    <% @members.each do |member| %>
+      <% if (member.active == false) %>
         <%= link_to member_path(member), class: "member-link" do %>
           <div class="member-card">
             <div class="member-photo">

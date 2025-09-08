@@ -4,7 +4,7 @@
   gap: 24px;
   margin: 40px auto;
   padding: 0 20px;
-  max-width: 1200px;
+  max-width: 1350px;
 }
 
 .member-card {
@@ -65,6 +65,16 @@
   text-decoration: none !important;
   color: inherit !important;
   display: block;
+}
+
+.member-old {
+  margin: 14px 2px 0;
+  padding: 16px 18px;
+  font-weight: 700;
+  color: #ffd87a;
+  font-size: clamp(1.5rem, 3vw, 10rem);
+  gap: 12px; /* espace entre le texte et l’image */
+  text-align: center;
 }
 
 /* Responsive */
