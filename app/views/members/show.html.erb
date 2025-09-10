@@ -6,6 +6,12 @@
   </div>
 </div>
 
+<% if (@member.active == true) %>
+  <p><%= @member.fonction %> de l'association depuis <%= @member.year_start %></p>
+<% else %>
+  <p><%= @member.fonction %> de l'association de <%= @member.year_start %> à <%= @member.year_end %></p>
+<% end %>
+
 <% @castings.each do |casting| %>
   <p><%= casting.piece.title %> : <%= casting.role %></p>
 <% end %>
