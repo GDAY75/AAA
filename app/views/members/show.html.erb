@@ -12,6 +12,12 @@
   <p><%= @member.fonction %> de l'association de <%= @member.year_start %> à <%= @member.year_end %></p>
 <% end %>
 
+<% if (@member.fonction == "Metteur en scène") %>
+  <% @pieces.each do |piece| %>
+    <p><%= piece.title %></p>
+  <% end %>
+<% end %>
+
 <% @castings.each do |casting| %>
   <p><%= casting.piece.title %> : <%= casting.role %></p>
 <% end %>

@@ -1,5 +1,6 @@
 class Member < ApplicationRecord
   has_many :castings
+  has_many :pieces
   before_validation :generate_unique_slug, if: -> { slug.blank? && first_name.present? }
 
   validates :slug, presence: true, uniqueness: true
