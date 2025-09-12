@@ -18,6 +18,13 @@
   <% end %>
 <% end %>
 
+<% piece_casting = nil %>
 <% @castings.each do |casting| %>
-  <p><%= casting.piece.title %> : <%= casting.role %></p>
+  <% if (piece_casting == casting.piece) %>
+    <li><%= casting.role %></li>
+  <% else %>
+    <p><%= casting.piece.title %> :</p>
+    <li><%= casting.role %></li>
+  <% end %>
+  <% piece_casting = casting.piece %>
 <% end %>
