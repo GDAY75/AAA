@@ -4,8 +4,6 @@
     <div class="spotlight"></div>
     <h1 class="asso-title"><%= @member.first_name.capitalize %>&nbsp;&nbsp;<%= @member.last_name.titleize %></h1>
   </div>
-</div>
-
 <% if (@member.active == true) %>
   <p><%= @member.fonction %> de l'association depuis <%= @member.year_start %></p>
 <% else %>
@@ -18,13 +16,17 @@
   <% end %>
 <% end %>
 
-<% piece_casting = nil %>
-<% @castings.each do |casting| %>
-  <% if (piece_casting == casting.piece) %>
-    <li><%= casting.role %></li>
-  <% else %>
-    <p><%= casting.piece.title %> :</p>
-    <li><%= casting.role %></li>
+<div class="casting-parchment">
+  <% piece_casting = nil %>
+  <h2 class="parchment-title">Mes Rôles</h2>
+  <% @castings.each do |casting| %>
+    <% if (piece_casting == casting.piece) %>
+      <li><%= casting.role %></li>
+    <% else %>
+      <p class="piece-title"><%= casting.piece.title %> (<%= casting.piece.year %>)</p>
+      <li><%= casting.role %></li>
+    <% end %>
+    <% piece_casting = casting.piece %>
   <% end %>
-  <% piece_casting = casting.piece %>
-<% end %>
+</div>
+</div>
