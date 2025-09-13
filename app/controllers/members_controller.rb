@@ -8,7 +8,7 @@ class MembersController < ApplicationController
   def show
     @member = Member.find_by!(slug: params[:slug])
     @castings = @member.castings.includes(:piece)
-    @pieces = @member.pieces
+    @pieces = @member.pieces.reverse
   end
 
 end

@@ -4,29 +4,32 @@
     <div class="spotlight"></div>
     <h1 class="asso-title"><%= @member.first_name.capitalize %>&nbsp;&nbsp;<%= @member.last_name.titleize %></h1>
   </div>
-<% if (@member.active == true) %>
-  <p><%= @member.fonction %> de l'association depuis <%= @member.year_start %></p>
-<% else %>
-  <p><%= @member.fonction %> de l'association de <%= @member.year_start %> à <%= @member.year_end %></p>
-<% end %>
-
-<% if (@member.fonction == "Metteur en scène") %>
-  <% @pieces.each do |piece| %>
-    <p><%= piece.title %></p>
+  <% if (@member.active == true) %>
+    <p><%= @member.fonction %> de l'association depuis <%= @member.year_start %></p>
+  <% else %>
+    <p><%= @member.fonction %> de l'association de <%= @member.year_start %> à <%= @member.year_end %></p>
   <% end %>
-<% end %>
 
-<div class="casting-parchment">
-  <% piece_casting = nil %>
-  <h2 class="parchment-title">Mes Rôles</h2>
-  <% @castings.each do |casting| %>
-    <% if (piece_casting == casting.piece) %>
-      <li><%= casting.role %></li>
-    <% else %>
-      <p class="piece-title"><%= casting.piece.title %> (<%= casting.piece.year %>)</p>
-      <li><%= casting.role %></li>
-    <% end %>
-    <% piece_casting = casting.piece %>
+  <% if (@member.fonction == "Metteur en scène") %>
+    <div class="casting-parchment">
+      <h2 class="parchment-title">Mes Mises en Scène</h2>
+      <% @pieces.each do |piece| %>
+        <p class="piece-title"><%= piece.title %> (<%= piece.year %>)</p>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="casting-parchment">
+      <% piece_casting = nil %>
+      <h2 class="parchment-title">Mes Rôles</h2>
+      <% @castings.each do |casting| %>
+        <% if (piece_casting == casting.piece) %>
+          <li><%= casting.role %></li>
+        <% else %>
+          <p class="piece-title"><%= casting.piece.title %> (<%= casting.piece.year %>)</p>
+          <li><%= casting.role %></li>
+        <% end %>
+        <% piece_casting = casting.piece %>
+      <% end %>
+    </div>
   <% end %>
-</div>
 </div>
