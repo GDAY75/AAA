@@ -10,6 +10,10 @@
     <p class="piece-author"><span><%= @member.fonction %> de l'association de <%= @member.year_start %> à <%= @member.year_end %></span></p>
   <% end %>
 
+  <% if @member.biography.present? %>
+    <p class="piece-author"><%= @member.biography %></p>
+  <% end %>
+
   <% if (@member.fonction == "Metteur en scène") %>
     <div class="casting-parchment">
       <h2 class="parchment-title">Mes Mises en Scène</h2>
