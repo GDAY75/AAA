@@ -1,4 +1,5 @@
 class ContactsController < ApplicationController
+  skip_before_action :authenticate_user!
   def new
     @contact = OpenStruct.new(name: "", email: "", subject: "", message: "")
   end
