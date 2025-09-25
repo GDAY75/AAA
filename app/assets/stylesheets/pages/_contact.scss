@@ -3,7 +3,7 @@
 
 /* Carte contact style théâtre */
 .contact-card {
-  max-width: 760px;
+  max-width: 1200px;
   margin: 40px auto;
   padding: 28px 22px;
   background:
@@ -21,7 +21,7 @@
   color: #ffd87a;
   text-shadow: 0 2px 6px rgba(0,0,0,.6);
   font-family: 'Carattere', cursive;
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-size: clamp(1.8rem, 4vw, 10rem);
 }
 
 .contact-flash {
@@ -36,12 +36,13 @@
 .contact-form .form-row {
   display: grid;
   gap: 6px;
-  margin-bottom: 14px;
+  margin-top: 42px;
 }
 
 .contact-form label {
   color: #ffd87a;
   font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 10rem);
 }
 
 .contact-form input[type="text"],
@@ -49,6 +50,7 @@
 .contact-form textarea {
   background: #12121a;
   color: #fff;
+  font-size: clamp(1.5rem, 2vw, 10rem);
   border: 1px solid #2a2a33;
   border-radius: 10px;
   padding: 10px 12px;
@@ -63,6 +65,7 @@
 }
 
 .btn-contact {
+  margin-top: 42px;
   display: inline-block;
   background: linear-gradient(180deg, #ffd87a, #c8a13a);
   color: #2a1a00;
@@ -70,13 +73,14 @@
   border-radius: 12px;
   padding: 10px 18px;
   font-weight: 800;
+  font-size: clamp(1.5rem, 3vw, 10rem);
   cursor: pointer;
   box-shadow: 0 6px 16px rgba(0,0,0,.35);
   transition: transform .15s ease, box-shadow .15s ease;
 }
 .btn-contact:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.45); }
 
-.contact-infos { margin-top: 10px; text-align: center; }
+.contact-infos { margin-top: 42px; text-align: center; font-size: clamp(1.5rem, 3vw, 10rem); }
 .contact-infos a { color: #ffd87a; text-decoration: none; }
 .contact-infos a:hover { text-decoration: underline; }
 
