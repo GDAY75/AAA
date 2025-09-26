@@ -2,11 +2,11 @@
   <div class="contact-card">
     <h1>Contact</h1>
 
-    <% if flash[:notice] %>
-      <div class="contact-flash success"><%= flash[:notice] %></div>
+    <% if @success %>
+      <div class="contact-flash success"><%= @success %></div>
     <% end %>
-    <% if flash[:alert] %>
-      <div class="contact-flash error"><%= flash[:alert] %></div>
+    <% if @errors.any? %>
+      <div class="contact-flash error"><%= @errors.join(" • ") %></div>
     <% end %>
 
     <%= form_with model: @contact, url: contact_path, scope: :contact, local: true, html: { class: "contact-form" } do |f| %>
