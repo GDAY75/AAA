@@ -18,7 +18,7 @@ class ContactsController < ApplicationController
     if @errors.any?
       render :new, status: :unprocessable_entity
     else
-      # Ici tu pourrais appeler un Mailer plus tard.
+      ContactMailer.with(contact: contact_params.to_h).contact_message.deliver_later
       redirect_to contact_path(success: 1)
     end
   end
