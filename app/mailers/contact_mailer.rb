@@ -1,6 +1,6 @@
 class ContactMailer < ApplicationMailer
   default \
-    to:   "gdayan94@gmail.com",                 # destinataire
+    to:   "assodesacteursanonymes@gmail.com",                 # destinataire
     from: "assodesacteursanonymes@gmail.com"                  # DOIT matcher le compte Gmail
     # tu peux garder le reply_to dynamique :
   def contact_message
