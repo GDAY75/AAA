@@ -5,9 +5,9 @@
     <h1 class="asso-title"><%= @member.first_name.capitalize %>&nbsp;&nbsp;<%= @member.last_name.titleize %></h1>
   </div>
   <% if (@member.active == true) %>
-    <p class="piece-author"><span><%= @member.fonction %> de l'association depuis <%= @member.year_start %></span></p>
+    <p class="piece-author"><span><%= @member.fonction %> de l 'association depuis <%= @member.year_start %></span></p>
   <% else %>
-    <p class="piece-author"><span><%= @member.fonction %> de l'association de <%= @member.year_start %> à <%= @member.year_end %></span></p>
+    <p class="piece-author"><span><%= @member.fonction %> de l 'association de <%= @member.year_start %> à <%= @member.year_end %></span></p>
   <% end %>
 
   <% if @member.biography.present? %>

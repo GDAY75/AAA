@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_09_162216) do
+ActiveRecord::Schema[7.1].define(version: 2025_09_28_120053) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,6 +23,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_09_162216) do
     t.string "photo"
     t.index ["member_id"], name: "index_castings_on_member_id"
     t.index ["piece_id"], name: "index_castings_on_piece_id"
+  end
+
+  create_table "galleries", force: :cascade do |t|
+    t.string "title"
+    t.string "category"
+    t.string "slug"
+    t.string "cover"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_galleries_on_slug", unique: true
   end
 
   create_table "members", force: :cascade do |t|
@@ -38,6 +48,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_09_162216) do
     t.integer "year_start", default: 2022
     t.integer "year_end", default: 2025
     t.index ["slug"], name: "index_members_on_slug", unique: true
+  end
+
+  create_table "photos", force: :cascade do |t|
+    t.string "image"
+    t.string "caption"
+    t.integer "position"
+    t.bigint "gallery_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gallery_id"], name: "index_photos_on_gallery_id"
   end
 
   create_table "pieces", force: :cascade do |t|
@@ -78,6 +98,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_09_162216) do
 
   add_foreign_key "castings", "members"
   add_foreign_key "castings", "pieces"
+  add_foreign_key "photos", "galleries"
   add_foreign_key "pieces", "members"
   add_foreign_key "reviews", "pieces"
   add_foreign_key "reviews", "users"
