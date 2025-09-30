@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   resources :pieces, only: [:index, :show]
   get  "contact", to: "contacts#new"
   post "contact", to: "contacts#create"
+  resources :galleries, only: [:index, :show]
 end
