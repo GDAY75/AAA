@@ -1,0 +1,23 @@
+<div class="galleries-wrapper" data-sidebar-target="galleries">
+  <h1 class="gal-title">Galeries</h1>
+
+  <% if @galleries.any? %>
+    <div class="galleries-grid">
+      <% @galleries.each do |g| %>
+        <%= link_to gallery_path(g), class: "gal-card" do %>
+          <div class="gal-cover">
+            <% if g.cover.present? %>
+              <%= image_tag g.cover, alt: g.title %>
+            <% else %>
+              <div class="cover-placeholder">Aucune image</div>
+            <% end %>
+            <span class="gal-chip"><%= g.category.presence || "Divers" %></span>
+          </div>
+          <h2 class="gal-name"><%= g.title %></h2>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <p>Aucune galerie pour le moment.</p>
+  <% end %>
+</div>
