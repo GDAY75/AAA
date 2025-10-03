@@ -1,0 +1,26 @@
+<div class="gallery-show" data-sidebar-target="galleries">
+  <h1 class="gal-title"><%= @gallery.title %></h1>
+  <% if @gallery.category.present? %>
+    <p class="gal-subtitle">Catégorie : <%= @gallery.category %></p>
+  <% end %>
+
+  <div class="photos-grid">
+    <% @photos.each_with_index do |photo, idx| %>
+      <% anchor = "p#{photo.id || idx}" %>
+      <a href="##{anchor}" class="photo-tile">
+        <%= image_tag photo.image, alt: (photo.caption.presence || @gallery.title) %>
+      </a>
+
+      <!-- Lightbox (CSS-only via :target) -->
+      <div id="<%= anchor %>" class="lightbox">
+        <a href="#" class="lightbox-close" title="Fermer">×</a>
+        <div class="lightbox-content">
+          <%= image_tag photo.image, alt: (photo.caption.presence || @gallery.title) %>
+          <% if photo.caption.present? %>
+            <div class="lightbox-caption"><%= photo.caption %></div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
