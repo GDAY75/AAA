@@ -1,0 +1,3 @@
+@function css-min($args...)   { @return unquote("min(#{$args})"); }
+@function css-max($args...)   { @return unquote("max(#{$args})"); }
+@function css-clamp($min, $val, $max) { @return unquote("clamp(#{$min}, #{$val}, #{$max})"); }

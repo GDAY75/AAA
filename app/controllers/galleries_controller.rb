@@ -1,4 +1,5 @@
 class GalleriesController < ApplicationController
+  skip_before_action :authenticate_user!
   def index
     @galleries = Gallery.order(created_at: :desc)
   end
