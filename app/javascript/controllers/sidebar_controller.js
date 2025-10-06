@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["sidebar", "banner", "pieces", "chevronLeft", "chevronRight", "members", "member"]
+  static targets = ["sidebar", "banner", "galleries", "pieces", "chevronLeft", "chevronRight", "members", "member"]
 
   connect() {
     this.updateLayout()
@@ -43,6 +43,11 @@ export default class extends Controller {
     if (this.hasMemberTarget) {
       this.memberTarget.style.marginRight = width
       this.memberTarget.style.width = `calc(100% - ${width})`
+    }
+
+    if (this.hasGalleriesTarget) {
+      this.galleriesTarget.style.marginRight = width
+      this.galleriesTarget.style.width = `calc(100% - ${width})`
     }
   }
 }
