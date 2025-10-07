@@ -103,8 +103,3 @@
   position: fixed; top: 16px; right: 20px; color: #ffd87a; text-decoration: none;
   font-size: 32px; line-height: 1; font-weight: 900;
 }
-
-/* Adaptation mobile : ignorer la marge imposée par la sidebar */
-@media (max-width: 768px) {
-  .galleries-wrapper, .gallery-show { margin-right: 0 !important; width: 100% !important; }
-}
