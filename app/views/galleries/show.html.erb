@@ -1,4 +1,4 @@
-<div class="gallery-show" data-sidebar-target="galleries">
+<div class="gallery-show" data-controller="lightbox" data-sidebar-target="galleries">
   <div class="title-spotlights is-animated">
     <div class="spotlight"></div>
     <div class="spotlight"></div>
@@ -6,22 +6,25 @@
   </div>
 
   <div class="photos-grid">
-    <% @photos.each_with_index do |photo, idx| %>
-      <% anchor = "p#{photo.id || idx}" %>
-      <a href="##{anchor}" class="photo-tile">
+    <% @photos.each do |photo| %>
+      <%= link_to "#",
+          class: "photo-tile",
+          data: {
+            action: "click->lightbox#open",
+            image_url: asset_path(photo.image),
+            caption: (photo.caption.presence || @gallery.title)
+          } do %>
         <%= image_tag photo.image, alt: (photo.caption.presence || @gallery.title) %>
-      </a>
-
-      <!-- Lightbox (CSS-only via :target) -->
-      <div id="<%= anchor %>" class="lightbox">
-        <a href="#" class="lightbox-close" title="Fermer">×</a>
-        <div class="lightbox-content">
-          <%= image_tag photo.image, alt: (photo.caption.presence || @gallery.title) %>
-          <% if photo.caption.present? %>
-            <div class="lightbox-caption"><%= photo.caption %></div>
-          <% end %>
-        </div>
-      </div>
+      <% end %>
     <% end %>
+  </div>
+
+  <!-- Lightbox unique, pilotée par Stimulus -->
+  <div class="lightbox" data-lightbox-target="modal" aria-hidden="true">
+    <a href="#" class="lightbox-close" data-action="click->lightbox#close" aria-label="Fermer">×</a>
+    <div class="lightbox-content">
+      <img data-lightbox-target="image" alt="">
+      <div class="lightbox-caption" data-lightbox-target="caption"></div>
+    </div>
   </div>
 </div>
