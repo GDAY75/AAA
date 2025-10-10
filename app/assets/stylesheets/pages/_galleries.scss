@@ -76,7 +76,7 @@
 }
 .photo-tile:hover img { transform: scale(1.05); }
 
-/* Overlay lightbox */
+/* Overlay */
 .lightbox {
   position: fixed;
   inset: 0;
@@ -84,13 +84,12 @@
   align-items: center;
   justify-content: center;
   background: rgba(0,0,0,.85);
-  z-index: 9999;        /* au-dessus de la sidebar */
+  z-index: 9999;
   padding: 24px;
 }
-
-/* Visible quand ouverte */
 .lightbox.is-open { display: flex; }
 
+/* Contenu */
 .lightbox-content {
   max-width: css-min(92vw, 1200px);
   max-height: 86vh;
@@ -115,11 +114,41 @@
   background: #111;
   border-top: 1px solid rgba(255,215,0,.18);
 }
+
+/* Fermer */
 .lightbox-close {
   position: fixed;
   top: 16px; right: 20px;
   color: #ffd87a;
   text-decoration: none;
   font-size: 32px;
-  line-height: 1; font-weight: 900;
+  line-height: 1;
+  font-weight: 900;
 }
+
+/* Boutons navigation (grosses zones cliquables) */
+.lightbox-prev,
+.lightbox-next {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,215,0,.8);
+  background: rgba(0,0,0,.35);
+  color: #ffd87a;
+  font-size: 28px;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.5), inset 0 0 10px rgba(255,215,0,.25);
+  transition: transform .12s ease, background .12s ease;
+  user-select: none;
+}
+.lightbox-prev { left: 18px; }
+.lightbox-next { right: 18px; }
+
+.lightbox-prev:hover,
+.lightbox-next:hover { background: rgba(255,215,0,.12); transform: translateY(-50%) scale(1.03); }
