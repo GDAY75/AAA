@@ -1,8 +1,9 @@
 <div class="gallery-show" data-controller="lightbox" data-sidebar-target="galleries">
-  <h1 class="gal-title"><%= @gallery.title %></h1>
-  <% if @gallery.category.present? %>
-    <p class="gal-subtitle">Catégorie : <%= @gallery.category %></p>
-  <% end %>
+  <div class="title-spotlights is-animated">
+    <div class="spotlight"></div>
+    <div class="spotlight"></div>
+    <h1 class="asso-title">Galeries</h1>
+  </div>
 
   <div class="photos-grid">
     <% @photos.each_with_index do |photo, idx| %>
@@ -22,11 +23,11 @@
 
   <!-- Lightbox unique, pilotée par Stimulus -->
   <div class="lightbox" data-lightbox-target="modal" aria-hidden="true">
-    <a href="#" class="lightbox-close" data-action="click->lightbox#close" aria-label="Fermer">×</a>
+    <a href="#" class="lightbox-close" data-action="click->lightbox#close" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></a>
 
     <!-- Boutons navigation -->
-    <button class="lightbox-prev" type="button" data-action="click->lightbox#prev" aria-label="Précédente">‹</button>
-    <button class="lightbox-next" type="button" data-action="click->lightbox#next" aria-label="Suivante">›</button>
+    <button class="lightbox-prev" type="button" data-action="click->lightbox#prev" aria-label="Précédente"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="lightbox-next" type="button" data-action="click->lightbox#next" aria-label="Suivante"><i class="fa-solid fa-chevron-right"></i></button>
 
     <div class="lightbox-content">
       <img data-lightbox-target="image" alt="">
@@ -34,4 +35,3 @@
     </div>
   </div>
 </div>
-
