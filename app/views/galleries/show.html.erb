@@ -1,15 +1,17 @@
-<div class="gallery-show" data-controller="lightbox" data-sidebar-target="galleries">
+<div class="gallery-show" data-controller="lightbox masonry" data-sidebar-target="galleries">
   <div class="title-spotlights is-animated">
     <div class="spotlight"></div>
     <div class="spotlight"></div>
     <h1 class="asso-title">Galeries</h1>
   </div>
 
-  <div class="photos-grid">
+  <!-- Source plate (les items sont rendus une fois) -->
+  <div class="photos-source" data-masonry-target="source">
     <% @photos.each_with_index do |photo, idx| %>
       <%= link_to "#",
           class: "photo-tile",
           data: {
+            masonry_item: true,           # <- marque l’item à placer
             action: "click->lightbox#open",
             lightbox_target: "thumb",
             index: idx,
@@ -21,14 +23,16 @@
     <% end %>
   </div>
 
-  <!-- Lightbox unique, pilotée par Stimulus -->
+  <!-- Conteneur des colonnes générées par Stimulus -->
+  <div class="photos-grid" data-masonry-target="grid"></div>
+
+  <!-- Lightbox (Stimulus) inchangée -->
   <div class="lightbox" data-lightbox-target="modal" aria-hidden="true">
     <a href="#" class="lightbox-close" data-action="click->lightbox#close" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></a>
 
     <!-- Boutons navigation -->
     <button class="lightbox-prev" type="button" data-action="click->lightbox#prev" aria-label="Précédente"><i class="fa-solid fa-chevron-left"></i></button>
     <button class="lightbox-next" type="button" data-action="click->lightbox#next" aria-label="Suivante"><i class="fa-solid fa-chevron-right"></i></button>
-
     <div class="lightbox-content">
       <img data-lightbox-target="image" alt="">
       <div class="lightbox-caption" data-lightbox-target="caption"></div>
