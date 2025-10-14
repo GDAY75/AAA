@@ -33,8 +33,22 @@
     <!-- Boutons navigation -->
     <button class="lightbox-prev" type="button" data-action="click->lightbox#prev" aria-label="Précédente"><i class="fa-solid fa-chevron-left"></i></button>
     <button class="lightbox-next" type="button" data-action="click->lightbox#next" aria-label="Suivante"><i class="fa-solid fa-chevron-right"></i></button>
+    <!-- Outils de zoom -->
+    <div class="lightbox-tools">
+      <button type="button" class="tool-btn" data-action="click->lightbox#zoomOut">−</button>
+      <button type="button" class="tool-btn" data-action="click->lightbox#zoomIn">+</button>
+      <button type="button" class="tool-btn" data-action="click->lightbox#zoomReset">100%</button>
+    </div>
+
     <div class="lightbox-content">
-      <img data-lightbox-target="image" alt="">
+      <!-- Viewport scroll/drag -->
+      <div class="lightbox-viewport"
+          data-lightbox-target="viewport"
+          data-action="wheel->lightbox#wheelZoom click->lightbox#toggleZoom
+                        pointerdown->lightbox#panStart pointermove->lightbox#panMove pointerup->lightbox#panEnd pointercancel->lightbox#panEnd pointerleave->lightbox#panEnd">
+        <img data-lightbox-target="image" alt="">
+      </div>
+
       <div class="lightbox-caption" data-lightbox-target="caption"></div>
     </div>
   </div>
