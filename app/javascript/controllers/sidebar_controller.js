@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["sidebar", "banner", "galleries", "pieces", "chevronLeft", "chevronRight", "members", "member"]
+  static targets = ["sidebar", "leftCurtain", "banner", "galleries", "pieces", "chevronLeft", "chevronRight", "members", "member"]
 
   connect() {
     this.updateLayout()
@@ -14,6 +14,7 @@ export default class extends Controller {
 
   updateLayout() {
     const isCollapsed = this.sidebarTarget.classList.contains("collapsed")
+    const isMobile = window.matchMedia("(max-width: 768px)").matches
 
     // icônes chevrons
     if (this.hasChevronLeftTarget && this.hasChevronRightTarget) {
@@ -21,33 +22,27 @@ export default class extends Controller {
       this.chevronRightTarget.style.display = isCollapsed ? "none" : "inline-block"
     }
 
-    const width = isCollapsed ? "80px" : "220px"
+    const rightWidth = isCollapsed ? "80px"  : "220px"
+    const leftWidth  = isMobile    ? "0px"   : (isCollapsed ? "80px" : "220px")
 
-    // bannière (si présente sur la page)
-    if (this.hasBannerTarget) {
-      this.bannerTarget.style.marginRight = width
-      this.bannerTarget.style.width = `calc(100% - ${width})`
+    if (this.hasLeftCurtainTarget) {
+      this.leftCurtainTarget.style.width = leftWidth
+      this.leftCurtainTarget.style.display = isMobile ? "none" : "block"
     }
 
-    // wrapper des pièces (si présent sur la page)
-    if (this.hasPiecesTarget) {
-      this.piecesTarget.style.marginRight = width
-      this.piecesTarget.style.width = `calc(100% - ${width})`
+    // Applique les marges aux zones de contenu connues
+    const applyLR = (el) => {
+      if (!el) return
+      el.style.marginLeft  = leftWidth
+      el.style.marginRight = rightWidth
+      el.style.width = `calc(100% - (${leftWidth} + ${rightWidth}))`
+      el.style.transition = "margin 0.3s ease, width 0.3s ease"
     }
 
-    if (this.hasMembersTarget) {
-      this.membersTarget.style.marginRight = width
-      this.membersTarget.style.width = `calc(100% - ${width})`
-    }
-
-    if (this.hasMemberTarget) {
-      this.memberTarget.style.marginRight = width
-      this.memberTarget.style.width = `calc(100% - ${width})`
-    }
-
-    if (this.hasGalleriesTarget) {
-      this.galleriesTarget.style.marginRight = width
-      this.galleriesTarget.style.width = `calc(100% - ${width})`
-    }
+    if (this.hasBannerTarget)    applyLR(this.bannerTarget)
+    if (this.hasPiecesTarget)    applyLR(this.piecesTarget)
+    if (this.hasMembersTarget) applyLR(this.membersTarget)
+    if (this.hasGalleriesTarget) applyLR(this.galleriesTarget)
+    if (this.hasContactTarget)   applyLR(this.contactTarget)
   }
 }

@@ -1,6 +1,23 @@
 :root {
   --sidebar-width: 220px;
   --sidebar-width-collapsed: 80px;
+  --left-curtain-width: 220px;
+  --left-curtain-width-collapsed: 80px;
+}
+
+.curtain-left {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--left-curtain-width);
+  height: 100vh;
+  background: url("rideau.png") no-repeat center center;
+  background-size: auto 100%;         /* visible en entier en hauteur */
+  background-position: center center; /* rogne sur les côtés si besoin */
+  z-index: 999;                       /* sous la sidebar (1000) mais au-dessus du contenu */
+  transition: width 0.3s ease;
+  transform: scaleX(-1);
+  transform-origin: center;
 }
 
 .sidebar {
@@ -19,7 +36,6 @@
   padding-top: 30px;
   transition: width 0.3s ease;
   z-index: 1000;
-  box-shadow: -2px 0 10px rgba(255, 0, 0, 0.5);
 }
 
 .sidebar.collapsed {
@@ -41,6 +57,10 @@
   font-weight: bolder;
   cursor: pointer;
   z-index: 1001;
+}
+
+@media (max-width: 768px) {
+  .curtain-left { display: none !important; }
 }
 
 .logo-frame {
