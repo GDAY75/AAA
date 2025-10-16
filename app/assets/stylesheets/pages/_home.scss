@@ -49,7 +49,7 @@
   text-align: center;
   color: gold;
   font-weight: 600;
-  font-size: 4rem;
+  font-size: 3.4rem;
   background: linear-gradient(400deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 50%);
   opacity: 0;
   transform: translateY(10%);
@@ -173,7 +173,7 @@
 }
 
 .presentation {
-  max-width: 1700px;
+  max-width: 1300px;
   margin: 60px auto;
   padding: 30px 24px;
   background: radial-gradient(circle at top, rgba(255,215,0,0.08), rgba(0,0,0,0.9));
@@ -190,7 +190,7 @@
   p {
     font-family: 'Carattere', cursive; /* cohérent avec ton thème */
     color: #e9e2d0;
-    font-size: clamp(1.5rem, 3vw, 10rem);
+    font-size: clamp(1.5rem, 2.5vw, 10rem);
     text-shadow: 0 2px 6px rgba(0,0,0,0.7);
     margin: 0;
     text-align: justify;

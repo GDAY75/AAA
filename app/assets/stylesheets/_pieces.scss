@@ -126,7 +126,7 @@
   box-shadow: 0 8px 20px rgba(0,0,0,.25);
   padding: 16px 18px;
   line-height: 1.6;
-  font-size: clamp(1.5rem, 3vw, 10rem);
+  font-size: clamp(1.5rem, 2.5vw, 10rem);
 }
 
 /* Auteur */
@@ -134,7 +134,7 @@
   margin: 14px 2px 0;
   padding: 16px 18px;
   color: #e9e2d0;
-  font-size: clamp(1.5rem, 3vw, 10rem);
+  font-size: clamp(1.5rem, 2.5vw, 10rem);
   display: flex;
   align-items: center;
   gap: 12px; /* espace entre le texte et l’image */
@@ -148,7 +148,7 @@
 
 .piece-comedien {
   color: #e9e2d0;
-  font-size: clamp(1.5rem, 3vw, 10rem);
+  font-size: clamp(1.5rem, 2.5vw, 10rem);
   text-align: center;
   margin-bottom: 4rem;
 }
