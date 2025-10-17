@@ -141,6 +141,7 @@
   font-size: 50px;
   line-height: 1;
   font-weight: 900;
+  z-index: 10001;
 }
 
 /* Boutons navigation (grosses zones cliquables) */
@@ -163,6 +164,7 @@
   box-shadow: 0 6px 18px rgba(0,0,0,.5), inset 0 0 10px rgba(255,215,0,.25);
   transition: transform .12s ease, background .12s ease;
   user-select: none;
+  z-index: 10001;
 }
 .lightbox-prev { left: 54px; }
 .lightbox-next { right: 54px; }
@@ -173,7 +175,7 @@
 /* Outils zoom */
 .lightbox-tools {
   position: fixed;
-  bottom: 150px; left: 50%;
+  top: 50px; right: 100px;
   transform: translateX(-50%);
   display: flex; gap: 8px;
   z-index: 10000;
