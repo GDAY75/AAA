@@ -20,14 +20,45 @@
     <% if author.present? %>
       <p class="piece-author"><span>Auteur : </span>&nbsp;<%= author %></p>
     <% end %>
-    <p class="piece-author">
-      <span>Mise en scène : </span>&nbsp;
-      <%= @piece.member.first_name %>&nbsp;<%= @piece.member.last_name.titleize %>
+    <div class="piece-director">
+      <p class="piece-author">
+        <span>Mise en scène : </span>&nbsp;
+        <%= @piece.member.first_name %>&nbsp;<%= @piece.member.last_name.titleize %>
+      </p>
 
-      <span class="star-photo">
-        <%= image_tag @piece.title.parameterize.underscore + "_3.jpg", alt: "Mise en scène", class: "star-img" %>
-      </span>
-    </p>
+      <div class="star-photo">
+        <svg class="star-svg" viewBox="0 0 100 100" aria-hidden="true" role="img">
+          <defs>
+            <!-- Etoile pour le découpage -->
+            <clipPath id="starClip" clipPathUnits="objectBoundingBox">
+              <polygon points="
+                0.50 0.00, 0.61 0.35, 0.98 0.35,
+                0.68 0.57, 0.79 0.91, 0.50 0.70,
+                0.21 0.91, 0.32 0.57, 0.02 0.35,
+                0.39 0.35
+              "/>
+            </clipPath>
+          </defs>
+
+          <!-- Image découpée -->
+          <image
+            x="0" y="0" width="100" height="100"
+            preserveAspectRatio="xMidYMid slice"
+            clip-path="url(#starClip)"
+            xlink:href="<%= asset_path(@piece.title.parameterize.underscore + '_3.jpg') %>" />
+
+          <!-- Bordure dorée -->
+          <polygon class="star-stroke" points="
+            50 0, 61 35, 98 35,
+            68 57, 79 91, 50 70,
+            21 91, 32 57, 2 35,
+            39 35
+          " fill="none" />
+        </svg>
+      </div>
+    </div>
+
+
 
     <p class="piece-author">
       <span>Comédiens : </span>
