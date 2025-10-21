@@ -218,3 +218,15 @@
     object-fit: contain;        /* sécurité, pas de déformation */
   }
 }
+
+.director-link {
+  color: gold;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+
+  &:hover {
+    color: red;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  }
+}

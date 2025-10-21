@@ -23,7 +23,12 @@
     <div class="presentation-photo">
       <%= image_tag "aaa_origine.jpg" %>
     </div>
-    <p class="piece-author">Nous répétons toutes les semaines au théâtre du Gouvernail à Paris sous la mise en scène de&nbsp;&nbsp;Anaïs Le Gall</p>
+    <p class="piece-author">
+      Nous répétons toutes les semaines au théâtre du Gouvernail à Paris sous la mise en scène de&nbsp;&nbsp;
+      <%= link_to "Anaïs Le Gall", member_path(Member.find_by(first_name: "Anaïs")),
+                  class: "director-link" %>
+    </p>
+
     <div class="presentation-photo">
       <%= image_tag "anais.jpg" %>
     </div>

@@ -133,8 +133,6 @@
   padding: 16px 18px;
   color: #e9e2d0;
   font-size: clamp(1.5rem, 2.5vw, 10rem);
-  display: flex;
-  align-items: center;
   gap: 12px; /* espace entre le texte et l’image */
   text-align: justify;
 
@@ -234,10 +232,6 @@
 @media (max-width: 900px) {
   .piece-director {
     flex-direction: column;     /* empile : texte puis image */
-  }
-
-  .piece-author {
-    display: flex;
   }
 
   .star-photo {
