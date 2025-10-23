@@ -21,6 +21,7 @@
 @media (max-width: 640px)  { .galleries-grid { grid-template-columns: 1fr; } }
 
 .gal-card {
+  max-width: 1000px;
   display: block;
   background: #0b0b12;
   color: #fff;

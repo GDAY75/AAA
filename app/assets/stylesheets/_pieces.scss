@@ -250,3 +250,9 @@
     height: 20rem;
   }
 }
+
+.photos-piece {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }

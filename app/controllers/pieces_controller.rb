@@ -9,6 +9,7 @@ class PiecesController < ApplicationController
   def show
     @castings = @piece.castings.includes(:member)
     @members  = @piece.members.distinct.order(:first_name)
+    @gallery = Gallery.find_by(title: @piece.title)
   end
 
   private
