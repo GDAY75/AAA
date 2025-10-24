@@ -95,18 +95,20 @@
       </ul>
     </p>
   </div>
-  <div class="photos-piece">
-    <p class="piece-author"><span>Photos de la Pièce :</span></p>
-    <%= link_to gallery_path(@gallery), class: "gal-card" do %>
-      <div class="gal-cover">
-        <% if @gallery.cover.present? %>
-          <%= image_tag @gallery.cover, alt: @gallery.title %>
-        <% else %>
-          <div class="cover-placeholder">Aucune image</div>
-        <% end %>
-        <span class="gal-chip"><%= @gallery.category.presence || "Divers" %></span>
-      </div>
-      <h2 class="gal-name"><%= @gallery.title %></h2>
-    <% end %>
-  </div>
+  <% if @gallery.present? %>
+    <div class="photos-piece">
+      <p class="piece-author"><span>Photos de la Pièce :</span></p>
+      <%= link_to gallery_path(@gallery), class: "gal-card" do %>
+        <div class="gal-cover">
+          <% if @gallery.cover.present? %>
+            <%= image_tag @gallery.cover, alt: @gallery.title %>
+          <% else %>
+            <div class="cover-placeholder">Aucune image</div>
+          <% end %>
+          <span class="gal-chip"><%= @gallery.category.presence || "Divers" %></span>
+        </div>
+        <h2 class="gal-name"><%= @gallery.title %></h2>
+      <% end %>
+    </div>
+  <% end %>
 </div>
