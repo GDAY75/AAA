@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_28_120053) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_25_095357) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -96,10 +96,27 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_28_120053) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "videos", force: :cascade do |t|
+    t.bigint "piece_id", null: false
+    t.string "title"
+    t.string "url"
+    t.string "provider"
+    t.string "thumbnail"
+    t.integer "position"
+    t.text "description"
+    t.datetime "published_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "file"
+    t.string "poster"
+    t.index ["piece_id"], name: "index_videos_on_piece_id"
+  end
+
   add_foreign_key "castings", "members"
   add_foreign_key "castings", "pieces"
   add_foreign_key "photos", "galleries"
   add_foreign_key "pieces", "members"
   add_foreign_key "reviews", "pieces"
   add_foreign_key "reviews", "users"
+  add_foreign_key "videos", "pieces"
 end
