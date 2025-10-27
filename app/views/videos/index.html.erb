@@ -1,0 +1,20 @@
+<div class="video-grid">
+  <% @pieces.each do |piece| %>
+    <% piece.videos.each do |v| %>
+      <%= link_to video_path(v), class: "video-card" do %>
+        <div class="thumb-wrap">
+          <% if v.poster.present? %>
+            <%= image_tag v.poster, alt: v.title %>
+          <% else %>
+            <div class="thumb-fallback">Vidéo</div>
+          <% end %>
+          <div class="play-badge">▶</div>
+        </div>
+        <div class="video-meta">
+          <div class="video-title"><%= v.title %></div>
+          <div class="video-provider">Local</div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
