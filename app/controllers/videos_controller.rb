@@ -1,6 +1,9 @@
 class VideosController < ApplicationController
+  skip_before_action :authenticate_user!
   def index
-    @pieces = Piece.includes(:videos).where.exists(:videos).order(year: :desc, title: :asc)
+    @pieces = Piece.where.associated(:videos)
+                  .includes(:videos)
+                  .order(year: :desc, title: :asc)
   end
 
   def show
