@@ -1,12 +1,10 @@
 class VideosController < ApplicationController
   skip_before_action :authenticate_user!
+
   def index
-    @pieces = Piece.where.associated(:videos)
+    @pieces = Piece.joins(:videos)
+                  .distinct
                   .includes(:videos)
                   .order(year: :desc, title: :asc)
-  end
-
-  def show
-    @video = Video.includes(:piece).find(params[:id])
   end
 end

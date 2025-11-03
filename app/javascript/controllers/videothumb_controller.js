@@ -1,69 +1,60 @@
+// app/javascript/controllers/videothumb_controller.js
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["wrap", "img", "src"]
+  static targets = ["card", "img", "src"]
 
   connect() {
     this.srcTargets.forEach((srcEl, i) => {
-      const url = srcEl.dataset.src
+      const videoPath = srcEl.dataset.src
       const imgEl = this.imgTargets[i]
-      if (!url || !imgEl) return
-      this.generatePoster(url, imgEl)
+      if (!videoPath || !imgEl) return
+      this.generatePreview(videoPath, imgEl)
     })
   }
 
-  async generatePoster(url, imgEl) {
+  async generatePreview(url, imgEl) {
     try {
       const video = document.createElement("video")
       video.src = url
-      video.crossOrigin = "anonymous"
       video.muted = true
-      video.playsInline = true
-      await video.play().catch(() => {}) // permet le load sur certains navigateurs
-      await this.whenCanPlay(video)
+      video.crossOrigin = "anonymous"
+      await video.play().catch(() => {})
+      await this.waitFor(video, "canplay")
 
-      // positionne à 0.5s (ou 10% de la durée si dispo)
-      const t = isFinite(video.duration) && video.duration > 1 ? Math.min(1, video.duration * 0.1) : 0.5
-      video.currentTime = t
-      await this.whenSeeked(video)
+      video.currentTime = 0.5
+      await this.waitFor(video, "seeked")
 
-      // dessine sur canvas
       const canvas = document.createElement("canvas")
-      const w = video.videoWidth
-      const h = video.videoHeight
-      if (!w || !h) return
-      canvas.width = w; canvas.height = h
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
       const ctx = canvas.getContext("2d")
-      ctx.drawImage(video, 0, 0, w, h)
-
-      // dataURL en jpg (qualité 0.8)
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
       const dataUrl = canvas.toDataURL("image/jpeg", 0.8)
       imgEl.src = dataUrl
-    } catch (e) {
-      // fallback si problème
-      imgEl.replaceWith(this.fallback())
+
+      // ajout clic pour lire la vraie vidéo
+      imgEl.closest(".thumb-wrap").addEventListener("click", () => {
+        this.replaceWithVideo(url, imgEl.closest(".thumb-wrap"))
+      })
+    } catch (err) {
+      console.warn("Prévisualisation vidéo impossible :", err)
+      imgEl.alt = "Prévisualisation indisponible"
     }
   }
 
-  whenCanPlay(video) {
-    return new Promise(resolve => {
-      if (video.readyState >= 2) return resolve()
-      const on = () => { video.removeEventListener("canplay", on); resolve() }
-      video.addEventListener("canplay", on, { once: true })
-    })
+  waitFor(video, event) {
+    return new Promise(resolve => video.addEventListener(event, resolve, { once: true }))
   }
 
-  whenSeeked(video) {
-    return new Promise(resolve => {
-      const on = () => { video.removeEventListener("seeked", on); resolve() }
-      video.addEventListener("seeked", on, { once: true })
-    })
-  }
-
-  fallback() {
-    const div = document.createElement("div")
-    div.className = "thumb-fallback"
-    div.textContent = "Vidéo"
-    return div
+  replaceWithVideo(url, container) {
+    const videoEl = document.createElement("video")
+    videoEl.src = url
+    videoEl.controls = true
+    videoEl.autoplay = true
+    videoEl.playsInline = true
+    videoEl.classList.add("video-player")
+    container.innerHTML = ""
+    container.appendChild(videoEl)
   }
 }

@@ -1,17 +1,18 @@
 <div class="video-grid" data-controller="videothumb">
   <% @pieces.each do |piece| %>
     <% piece.videos.each do |v| %>
-      <%= link_to video_path(v), class: "video-card" do %>
-        <div class="thumb-wrap" data-videothumb-target="wrap">
-          <img alt="<%= v.title %>" data-videothumb-target="img" />
+      <div class="video-card" data-videothumb-target="card">
+        <div class="thumb-wrap">
+          <img data-videothumb-target="img" alt="<%= v.title %>" />
           <div class="play-badge">▶</div>
-          <span class="thumb-src" data-videothumb-target="src" data-src="<%= asset_path(v.file) %>"></span>
         </div>
+        <span data-videothumb-target="src" data-src="<%= asset_path(v.file) %>"></span>
         <div class="video-meta">
-          <div class="video-title"><%= v.title %></div>
-          <div class="video-provider">Local</div>
+          <p class="video-title"><%= v.title %></p>
+          <p class="video-provider">Local</p>
         </div>
-      <% end %>
+      </div>
     <% end %>
   <% end %>
 </div>
+
