@@ -1,60 +1,93 @@
-// app/javascript/controllers/videothumb_controller.js
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["card", "img", "src"]
+  static targets = ["card", "wrap", "img", "src"]
 
   connect() {
-    this.srcTargets.forEach((srcEl, i) => {
-      const videoPath = srcEl.dataset.src
-      const imgEl = this.imgTargets[i]
-      if (!videoPath || !imgEl) return
-      this.generatePreview(videoPath, imgEl)
+    // Debug rapide
+    // console.log("[videothumb] cards:", this.cardTargets.length)
+
+    this.cardTargets.forEach(card => {
+      const wrap = card.querySelector("[data-videothumb-target='wrap']")
+      const img  = card.querySelector("[data-videothumb-target='img']")
+      const src  = card.querySelector("[data-videothumb-target='src']")
+      const url  = src?.dataset.src
+      if (!wrap || !img || !url) return
+
+      // Génère l'aperçu
+      this.generatePreview(url, img).then(ok => {
+        // Branche le clic pour remplacer par la vraie vidéo
+        wrap.addEventListener("click", () => this.replaceWithVideo(url, wrap))
+      }).catch(() => {
+        img.alt = "Prévisualisation indisponible"
+      })
     })
   }
 
   async generatePreview(url, imgEl) {
-    try {
+    return new Promise((resolve, reject) => {
       const video = document.createElement("video")
-      video.src = url
+      video.preload = "metadata"
       video.muted = true
-      video.crossOrigin = "anonymous"
-      await video.play().catch(() => {})
-      await this.waitFor(video, "canplay")
+      video.playsInline = true
+      // Ne pas définir crossOrigin pour des assets mêmes origine (évite soucis Safari)
+      video.src = url
 
-      video.currentTime = 0.5
-      await this.waitFor(video, "seeked")
+      const onError = () => { cleanup(); reject(new Error("video error")) }
+      const onLoadedMeta = async () => {
+        // Positionne à ~0.5s (ou 0 si plus court)
+        const t = isFinite(video.duration) && video.duration > 0.6 ? 0.5 : 0
+        const onSeeked = () => {
+          try {
+            const w = video.videoWidth, h = video.videoHeight
+            if (!w || !h) throw new Error("no dimensions")
+            const canvas = document.createElement("canvas")
+            canvas.width = w; canvas.height = h
+            const ctx = canvas.getContext("2d")
+            ctx.drawImage(video, 0, 0, w, h)
+            imgEl.src = canvas.toDataURL("image/jpeg", 0.85)
+            cleanup(); resolve(true)
+          } catch (e) { cleanup(); reject(e) }
+        }
+        video.addEventListener("seeked", onSeeked, { once: true })
+        try { video.currentTime = t } catch { onSeeked() } // fallback si seek bloqué
+      }
 
-      const canvas = document.createElement("canvas")
-      canvas.width = video.videoWidth
-      canvas.height = video.videoHeight
-      const ctx = canvas.getContext("2d")
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
-      const dataUrl = canvas.toDataURL("image/jpeg", 0.8)
-      imgEl.src = dataUrl
+      const cleanup = () => {
+        video.removeEventListener("error", onError)
+        video.removeEventListener("loadedmetadata", onLoadedMeta)
+      }
 
-      // ajout clic pour lire la vraie vidéo
-      imgEl.closest(".thumb-wrap").addEventListener("click", () => {
-        this.replaceWithVideo(url, imgEl.closest(".thumb-wrap"))
-      })
-    } catch (err) {
-      console.warn("Prévisualisation vidéo impossible :", err)
-      imgEl.alt = "Prévisualisation indisponible"
-    }
-  }
-
-  waitFor(video, event) {
-    return new Promise(resolve => video.addEventListener(event, resolve, { once: true }))
+      video.addEventListener("error", onError, { once: true })
+      video.addEventListener("loadedmetadata", onLoadedMeta, { once: true })
+      // Astuce: forcer le décodage meta dans certains navigateurs
+      video.load()
+    })
   }
 
   replaceWithVideo(url, container) {
     const videoEl = document.createElement("video")
-    videoEl.src = url
     videoEl.controls = true
-    videoEl.autoplay = true
+    videoEl.autoplay = true         // démarrer de suite
+    videoEl.muted = true            // autoplay friendly
     videoEl.playsInline = true
-    videoEl.classList.add("video-player")
-    container.innerHTML = ""
+    videoEl.className = "video-player"
+    const source = document.createElement("source")
+    source.src = url
+    source.type = this.contentTypeFrom(url)
+    videoEl.appendChild(source)
+
+    container.innerHTML = ""        // remplace la vignette
     container.appendChild(videoEl)
+    // Lance la lecture (certaines plateformes l’exigent même avec autoplay)
+    videoEl.play().catch(() => {})
+  }
+
+  contentTypeFrom(path) {
+    if (path.endsWith(".mp4") || path.includes(".mp4?")) return "video/mp4"
+    if (path.endsWith(".webm")|| path.includes(".webm?")) return "video/webm"
+    if (path.endsWith(".ogg") || path.includes(".ogg?")) return "video/ogg"
+    if (path.endsWith(".mov") || path.includes(".mov?")) return "video/quicktime"
+    return "video/mp4"
   }
 }

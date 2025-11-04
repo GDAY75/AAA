@@ -12,4 +12,5 @@ Rails.application.config.assets.version = "1.0"
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 Rails.application.config.assets.precompile += %w(bootstrap.min.js popper.js)
 Rails.application.config.assets.paths << Rails.root.join("app/assets/videos")
-Rails.application.config.assets.precompile += %w[ *.mp4 *.webm *.ogg *.mov *.m4v *.jpg *.png ]
+Rails.application.config.assets.precompile += %w[ *.mp4 *.webm *.ogg *.mov *.m4v ]
+
