@@ -90,4 +90,20 @@ export default class extends Controller {
     if (path.endsWith(".mov") || path.includes(".mov?")) return "video/quicktime"
     return "video/mp4"
   }
+
+  disconnect() {
+    this.stopAllInScope()
+  }
+
+  stopAllInScope() {
+    this.element.querySelectorAll("video").forEach(v => {
+      try {
+        v.pause()
+        v.removeAttribute("src")
+        while (v.firstChild) v.removeChild(v.firstChild)
+        v.load()
+      } catch (e) {}
+    })
+  }
+
 }
