@@ -1,24 +1,17 @@
 import { Controller } from "@hotwired/stimulus"
 
+// Génère juste une image d'aperçu depuis la vidéo.
+// ⛔ Aucun listener de clic ici (l’overlay s’occupe du clic).
 export default class extends Controller {
   static targets = ["card", "wrap", "img", "src"]
 
   connect() {
-    // Debug rapide
-    // console.log("[videothumb] cards:", this.cardTargets.length)
-
     this.cardTargets.forEach(card => {
-      const wrap = card.querySelector("[data-videothumb-target='wrap']")
-      const img  = card.querySelector("[data-videothumb-target='img']")
-      const src  = card.querySelector("[data-videothumb-target='src']")
-      const url  = src?.dataset.src
-      if (!wrap || !img || !url) return
-
-      // Génère l'aperçu
-      this.generatePreview(url, img).then(ok => {
-        // Branche le clic pour remplacer par la vraie vidéo
-        wrap.addEventListener("click", () => this.replaceWithVideo(url, wrap))
-      }).catch(() => {
+      const img = card.querySelector("[data-videothumb-target='img']")
+      const src = card.querySelector("[data-videothumb-target='src']")
+      const url = src?.dataset.src
+      if (!img || !url) return
+      this.generatePreview(url, img).catch(() => {
         img.alt = "Prévisualisation indisponible"
       })
     })
@@ -30,12 +23,10 @@ export default class extends Controller {
       video.preload = "metadata"
       video.muted = true
       video.playsInline = true
-      // Ne pas définir crossOrigin pour des assets mêmes origine (évite soucis Safari)
       video.src = url
 
       const onError = () => { cleanup(); reject(new Error("video error")) }
-      const onLoadedMeta = async () => {
-        // Positionne à ~0.5s (ou 0 si plus court)
+      const onLoadedMeta = () => {
         const t = isFinite(video.duration) && video.duration > 0.6 ? 0.5 : 0
         const onSeeked = () => {
           try {
@@ -50,7 +41,7 @@ export default class extends Controller {
           } catch (e) { cleanup(); reject(e) }
         }
         video.addEventListener("seeked", onSeeked, { once: true })
-        try { video.currentTime = t } catch { onSeeked() } // fallback si seek bloqué
+        try { video.currentTime = t } catch { onSeeked() }
       }
 
       const cleanup = () => {
@@ -60,50 +51,8 @@ export default class extends Controller {
 
       video.addEventListener("error", onError, { once: true })
       video.addEventListener("loadedmetadata", onLoadedMeta, { once: true })
-      // Astuce: forcer le décodage meta dans certains navigateurs
       video.load()
     })
   }
-
-  replaceWithVideo(url, container) {
-    const videoEl = document.createElement("video")
-    videoEl.controls = true
-    videoEl.autoplay = true         // démarrer de suite
-    videoEl.muted = true            // autoplay friendly
-    videoEl.playsInline = true
-    videoEl.className = "video-player"
-    const source = document.createElement("source")
-    source.src = url
-    source.type = this.contentTypeFrom(url)
-    videoEl.appendChild(source)
-
-    container.innerHTML = ""        // remplace la vignette
-    container.appendChild(videoEl)
-    // Lance la lecture (certaines plateformes l’exigent même avec autoplay)
-    videoEl.play().catch(() => {})
-  }
-
-  contentTypeFrom(path) {
-    if (path.endsWith(".mp4") || path.includes(".mp4?")) return "video/mp4"
-    if (path.endsWith(".webm")|| path.includes(".webm?")) return "video/webm"
-    if (path.endsWith(".ogg") || path.includes(".ogg?")) return "video/ogg"
-    if (path.endsWith(".mov") || path.includes(".mov?")) return "video/quicktime"
-    return "video/mp4"
-  }
-
-  disconnect() {
-    this.stopAllInScope()
-  }
-
-  stopAllInScope() {
-    this.element.querySelectorAll("video").forEach(v => {
-      try {
-        v.pause()
-        v.removeAttribute("src")
-        while (v.firstChild) v.removeChild(v.firstChild)
-        v.load()
-      } catch (e) {}
-    })
-  }
-
 }
+
