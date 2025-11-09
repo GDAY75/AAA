@@ -27,3 +27,36 @@ window.addEventListener("pagehide", pauseAllVideos)
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState !== "visible") pauseAllVideos()
 })
+
+function hardCloseVideoModal() {
+  document.querySelectorAll(".video-modal").forEach(modal => {
+    modal.classList.remove("is-open");
+  });
+}
+
+document.addEventListener("turbo:before-cache", hardCloseVideoModal);
+document.addEventListener("turbo:before-render", hardCloseVideoModal);
+document.addEventListener("turbo:visit", hardCloseVideoModal);
+
+function forceCloseVideoModal() {
+  document.querySelectorAll(".video-modal").forEach(modal => {
+    modal.classList.remove("is-open");
+    // Au cas où un player existe encore, on purge.
+    const content = modal.querySelector(".video-modal__content");
+    if (content) {
+      content.querySelectorAll("video").forEach(v => {
+        try {
+          v.pause();
+          v.removeAttribute("src");
+          while (v.firstChild) v.removeChild(v.firstChild);
+          v.load();
+        } catch {}
+        v.remove();
+      });
+    }
+  });
+}
+
+document.addEventListener("turbo:before-cache", forceCloseVideoModal);
+document.addEventListener("turbo:before-render", forceCloseVideoModal);
+document.addEventListener("turbo:visit",        forceCloseVideoModal);

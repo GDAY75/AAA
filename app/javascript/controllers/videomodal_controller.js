@@ -1,21 +1,70 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["modal", "content"]
-
   connect() {
     this.onKey = (e) => { if (e.key === "Escape") this.close() }
   }
 
   open(e) {
     e.preventDefault()
-    const url = e.currentTarget.dataset.videoUrl
+    const url = e.currentTarget?.dataset?.videoUrl
     if (!url) return
+    this.close() // au cas où
 
-    this.clear()
+    // Crée le conteneur overlay
+    this.modal = document.createElement("div")
+    Object.assign(this.modal.style, {
+      position: "fixed", inset: "0", zIndex: "99999",
+      background: "rgba(0,0,0,0.85)", display: "grid", placeItems: "center"
+    })
+    this.modal.className = "video-overlay"
 
+    // Fermer sur clic hors player
+    this.modal.addEventListener("click", (ev) => {
+      if (ev.target === this.modal) this.close()
+    })
+
+    // Bouton close (icône Font Awesome dorée)
+    const closeBtn = document.createElement("button");
+    closeBtn.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
+    Object.assign(closeBtn.style, {
+      position: "fixed",
+      top: "50px",
+      right: "50px",
+      color: "#ffd87a",
+      textDecoration: "none",
+      fontSize: "50px",
+      lineHeight: "1",
+      fontWeight: "900",
+      background: "transparent",
+      border: "none",
+      cursor: "pointer",
+      zIndex: "10001",
+      transition: "color 0.3s ease"
+    });
+
+    // Hover rouge comme les autres boutons du site
+    closeBtn.addEventListener("mouseenter", () => (closeBtn.style.color = "red"));
+    closeBtn.addEventListener("mouseleave", () => (closeBtn.style.color = "#ffd87a"));
+
+    // Action de fermeture
+    closeBtn.addEventListener("click", () => this.close());
+
+    // Ajout dans la modale
+    this.modal.appendChild(closeBtn);
+
+    // Contenu centré
+    const content = document.createElement("div")
+    Object.assign(content.style, {
+      maxWidth: "92vw", maxHeight: "90vh", width: "100%", display: "grid", placeItems: "center"
+    })
+
+    // Lecteur vidéo
     const video = document.createElement("video")
-    video.className = "video-modal__player"
+    Object.assign(video.style, {
+      maxWidth: "100%", maxHeight: "90vh", background: "#000",
+      border: "1px solid rgba(255,215,0,0.25)", borderRadius: "12px", boxShadow: "0 20px 60px rgba(0,0,0,0.6)"
+    })
     video.controls = true
     video.autoplay = true
     video.muted = true
@@ -27,29 +76,25 @@ export default class extends Controller {
     source.type = this.contentTypeFrom(url)
     video.appendChild(source)
 
-    this.contentTarget.appendChild(video)
+    content.appendChild(video)
+    this.modal.appendChild(content)
+    document.body.appendChild(this.modal)
 
-    this.modalTarget.classList.add("is-open")
     document.body.style.overflow = "hidden"
     document.addEventListener("keydown", this.onKey)
   }
 
   close() {
-    this.contentTarget.querySelectorAll("video").forEach(v => {
-      try {
-        v.pause()
-        v.removeAttribute("src")
-        while (v.firstChild) v.removeChild(v.firstChild)
-        v.load()
-      } catch {}
-      v.remove()
+    if (!this.modal) return
+    // purge player
+    this.modal.querySelectorAll("video").forEach(v => {
+      try { v.pause(); v.removeAttribute("src"); while (v.firstChild) v.removeChild(v.firstChild); v.load() } catch {}
     })
-    this.modalTarget.classList.remove("is-open")
+    this.modal.remove()
+    this.modal = null
     document.body.style.overflow = ""
     document.removeEventListener("keydown", this.onKey)
   }
-
-  clear() { this.contentTarget.innerHTML = "" }
 
   contentTypeFrom(path) {
     if (!path) return "video/mp4"
@@ -60,4 +105,3 @@ export default class extends Controller {
     return "video/mp4"
   }
 }
-

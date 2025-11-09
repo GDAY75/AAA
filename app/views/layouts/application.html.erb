@@ -10,17 +10,11 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body data-controller="sidebar videomodal">
+  <body data-controller="sidebar videomodal videothumb">
     <%= render "shared/navbar" %>
     <%= render "shared/flashes" %>
 
     <%= yield %>
-
-    <div class="video-modal" data-videomodal-target="modal" aria-hidden="true">
-      <button class="video-modal__close" type="button" aria-label="Fermer" data-action="click->videomodal#close"><i class="fa-solid fa-xmark"></i></button>
-      <div class="video-modal__backdrop" data-action="click->videomodal#close"></div>
-      <div class="video-modal__content" data-videomodal-target="content"></div>
-    </div>
 
   </body>
 </html>

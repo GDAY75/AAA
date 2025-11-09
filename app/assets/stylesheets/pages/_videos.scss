@@ -30,6 +30,8 @@
   transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
   width: 100%;
   max-width: 700px;
+  position: relative;    /* << essentiel */
+  z-index: 0;
 }
 
 .video-card:hover {
@@ -81,6 +83,8 @@
     rgba(0, 0, 0, 0.35)
   );
 }
+
+.play-badge { pointer-events: none; }
 
 .thumb-wrap:hover .play-badge {
   opacity: 1;
@@ -144,53 +148,14 @@
     ),
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.25));
   opacity: 0.7;
+  z-index: 0;
 }
 
-.video-modal {
-  position: fixed;
-  inset: 0;
-  display: none;
-  z-index: 2200; /* au-dessus de ta sidebar */
-}
-.video-modal.is-open { display: block; }
+.videos-index::before { content: none !important; }
 
-.video-modal__backdrop {
-  position: absolute; inset: 0;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(2px);
-}
-
-.video-modal__content {
-  position: absolute;
-  inset: 5vh 4vw;
-  display: grid;
-  place-items: center;
-  max-width: 92vw;
-  max-height: 90vh;
-  margin: 0 auto;
-}
-
-.video-modal__player {
-  max-width: 100%;
-  max-height: 90%;
-  width: auto;
-  height: 90%;
-  background: #000;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-  border: 1px solid rgba(255,215,0,0.25);
-  border-radius: 12px;
-  object-fit: contain;
-}
-
-.video-modal__close {
-  position: fixed;
-  top: 50px; right: 50px;
-  color: #ffd87a;
-  text-decoration: none;
-  font-size: 50px;
-  line-height: 1;
-  font-weight: 900;
-  z-index: 10001;
-  background: #000;
-  border: none;
+/* On s’assure que le contenu passe au-dessus du ::before */
+.video-card .thumb-wrap,
+.video-card .video-meta {
+  position: relative;
+  z-index: 1;
 }

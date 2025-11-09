@@ -4,11 +4,13 @@
     <div class="spotlight"></div>
     <h1 class="asso-title">Vidéos</h1>
   </div>
-  <div class="video-grid" data-controller="videothumb">
+  <div class="video-grid">
     <% @pieces.each do |piece| %>
       <% piece.videos.order(position: :asc, created_at: :asc).each do |v| %>
         <div class="video-card" data-videothumb-target="card">
-          <div class="thumb-wrap" data-videothumb-target="wrap" data-action="click->videomodal#open" data-video-url="<%= asset_path(v.file) %>">
+          <div class="thumb-wrap"
+              data-action="click->videomodal#open"
+              data-video-url="<%= asset_path(v.file) %>">
             <img data-videothumb-target="img" alt="<%= v.title %>">
             <div class="play-badge">▶</div>
           </div>
