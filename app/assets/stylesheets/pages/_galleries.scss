@@ -217,3 +217,25 @@
   user-select: none;
   -webkit-user-drag: none;
 }
+
+.photo-credit {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* ou flex-start selon ta mise en page */
+  gap: 12px; /* espace entre le texte et le logo */
+  margin-bottom: 40px;
+  font-style: italic;
+  font-size: clamp(1.5rem, 2.5vw, 10rem);
+  color: gold;
+}
+
+.photo-credit__logo {
+  height: 55px; /* ajuste selon ton image */
+  width: auto;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.photo-credit__logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.6));
+}

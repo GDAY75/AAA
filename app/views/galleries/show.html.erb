@@ -5,6 +5,15 @@
     <h1 class="asso-title"><%= @gallery.title %></h1>
   </div>
 
+  <% if @gallery.category == "Répètes"%>
+    <div class="photo-credit">
+      <span>Photos prises par :</span>
+      <%= link_to "https://horo-photographie.com/", target: "_blank", rel: "noopener" do %>
+        <%= image_tag "photographe.png", alt: "Horo Photographie", class: "photo-credit__logo" %>
+      <% end %>
+    </div>
+  <% end %>
+
   <!-- Source plate (les items sont rendus une fois) -->
   <div class="photos-source" data-masonry-target="source">
     <% @photos.each_with_index do |photo, idx| %>
