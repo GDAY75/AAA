@@ -37,4 +37,10 @@
       <%= image_tag "aaa_friends.jpg" %>
     </div>
   </div>
+  <div class="photo-credit">
+    <span>De nombreuses photos du site ont été prises par :</span>
+    <%= link_to "https://horo-photographie.com/", target: "_blank", rel: "noopener" do %>
+      <%= image_tag "photographe.png", alt: "Horo Photographie", class: "photo-credit__logo" %>
+    <% end %>
+  </div>
 </div>
