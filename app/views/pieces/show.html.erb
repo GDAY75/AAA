@@ -17,10 +17,13 @@
 
     <%# Auteur %>
     <% author = @piece.try(:author) || @piece.try(:auteur) %>
+    <div class="piece-director">
     <% if author.present? %>
       <p class="piece-author"><span>Auteur : </span>&nbsp;<%= author %></p>
     <% end %>
-    <div class="piece-director">
+
+    <div class="section-separator">✦</div>
+
       <p class="piece-author">
         <span>Mise en scène : </span>&nbsp;
         <%= link_to member_path(@piece.member), class: "director-link" do %>
@@ -61,10 +64,10 @@
       </div>
     </div>
 
+    <div class="section-separator">✦</div>
 
-
-    <p class="piece-author">
-      <span>Comédiens : </span>
+    <p class="piece-author piece-comedien">
+      <span>Comédiens :</span>
       <ul>
         <% @members.each do |member| %>
           <div class="piece-comedien">
@@ -95,6 +98,7 @@
       </ul>
     </p>
   </div>
+  <div class="section-separator">✦</div>
   <% if @gallery.present? %>
     <div class="medias-piece">
       <p class="piece-author"><span>Photos de la Pièce :</span></p>

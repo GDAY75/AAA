@@ -145,6 +145,7 @@
 .piece-director{
   margin-top: 25px;
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -257,3 +258,26 @@
     align-items: center;
     gap: 24px;
   }
+
+.section-separator {
+  text-align: center;
+  font-size: 2rem;
+  color: gold;
+  margin: 40px auto;
+  text-shadow: 0 0 6px rgba(255, 0, 0, 0.4);
+  letter-spacing: 6px;
+  user-select: none;
+  opacity: 0.9;
+}
+
+.section-separator::before,
+.section-separator::after {
+  content: "";
+  display: inline-block;
+  align-items: center;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, gold, transparent);
+  vertical-align: super;
+  margin: 0 10px;
+}
