@@ -4,18 +4,49 @@
     <div class="spotlight"></div>
     <h1 class="asso-title">Galeries</h1>
   </div>
-
   <% if @galleries.any? %>
     <div class="galleries-grid">
       <% @galleries.each do |g| %>
         <%= link_to gallery_path(g), class: "gal-card" do %>
-          <div class="gal-cover">
-            <% if g.cover.present? %>
-              <%= image_tag g.cover, alt: g.title %>
-            <% else %>
-              <div class="cover-placeholder">Aucune image</div>
-            <% end %>
-            <span class="gal-chip"><%= g.category.presence || "Divers" %></span>
+          <div class="gal-cover"
+              data-controller="galcover"
+              data-galcover-interval-value="2400"
+              data-galcover-autoplay-value="true">
+            <div class="gal-cover-stack" data-galcover-target="stack">
+              <% images = [] %>
+
+              <% if g.respond_to?(:photos) %>
+                <% g.photos.to_a.sample(6).each do |p| %>
+                  <%# ActiveStorage ou colonne String : on gère les deux sans planter %>
+                  <% if p.respond_to?(:image) && p.image.present? %>
+                    <% if p.image.respond_to?(:attached?) && p.image.attached? %>
+                      <% images << url_for(p.image) %>
+                    <% else %>
+                      <% images << asset_path(p.image) %>
+                    <% end %>
+                  <% elsif p.respond_to?(:file) && p.file.present? %>
+                    <% images << asset_path(p.file) %>
+                  <% elsif p.respond_to?(:filename) && p.filename.present? %>
+                    <% images << asset_path(p.filename) %>
+                  <% elsif p.respond_to?(:path) && p.path.present? %>
+                    <% images << asset_path(p.path) %>
+                  <% end %>
+                <% end %>
+              <% end %>
+
+              <% if images.any? %>
+                <% images.each_with_index do |src, i| %>
+                  <img src="<%= src %>"
+                      alt="<%= "#{g.title} – photo #{i+1}" %>"
+                      class="gal-slide <%= 'is-active' if i.zero? %>"
+                      loading="<%= i.zero? ? 'eager' : 'lazy' %>">
+                <% end %>
+              <% elsif g.cover.present? %>
+                <%= image_tag g.cover, alt: g.title, class: "gal-slide is-active" %>
+              <% else %>
+                <div class="cover-placeholder">Aucune image</div>
+              <% end %>
+            </div>
           </div>
           <h2 class="gal-name"><%= g.title %></h2>
         <% end %>

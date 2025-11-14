@@ -239,3 +239,63 @@
   transform: scale(1.05);
   filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.6));
 }
+
+.gal-card {
+  text-decoration: none;
+  color: inherit;
+}
+
+.gal-cover {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;      /* ajuste si tu veux un autre ratio */
+  background: #0b0b12;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.gal-cover-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.gal-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.02);             /* léger zoom pour douceur */
+  transition: opacity .6s ease, transform .6s ease;
+  will-change: opacity, transform;
+}
+
+.gal-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.gal-chip {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 4px 10px;
+  font-size: .85rem;
+  color: #000;
+  background: gold;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0,0,0,.25);
+}
+
+.cover-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #aaa;
+  background: #111;
+  font-style: italic;
+}
