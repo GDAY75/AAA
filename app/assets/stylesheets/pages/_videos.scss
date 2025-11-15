@@ -159,3 +159,10 @@
   position: relative;
   z-index: 1;
 }
+
+.video-card--large {
+  width: 100%;
+  max-width: 1000px;          /* limite si écran immense */
+  margin: 0 auto 50px;        /* centrée + espace dessous */
+  display: block;
+}

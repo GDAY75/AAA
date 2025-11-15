@@ -102,15 +102,47 @@
   <% if @gallery.present? %>
     <div class="medias-piece">
       <p class="piece-author"><span>Photos de la Pièce :</span></p>
-      <%= link_to gallery_path(@gallery), class: "gal-card" do %>
-        <div class="gal-cover">
-          <% if @gallery.cover.present? %>
-            <%= image_tag @gallery.cover, alt: @gallery.title %>
-          <% else %>
-            <div class="cover-placeholder">Aucune image</div>
-          <% end %>
-          <span class="gal-chip"><%= @gallery.category.presence || "Divers" %></span>
-        </div>
+      <%= link_to gallery_path(@gallery), class: "gal-card gal-card--large" do %>
+        <div class="gal-cover"
+              data-controller="galcover"
+              data-galcover-interval-value="2400"
+              data-galcover-autoplay-value="true">
+            <div class="gal-cover-stack" data-galcover-target="stack">
+              <% images = [] %>
+
+              <% if @gallery.respond_to?(:photos) %>
+                <% @gallery.photos.to_a.sample(6).each do |p| %>
+                  <%# ActiveStorage ou colonne String : on gère les deux sans planter %>
+                  <% if p.respond_to?(:image) && p.image.present? %>
+                    <% if p.image.respond_to?(:attached?) && p.image.attached? %>
+                      <% images << url_for(p.image) %>
+                    <% else %>
+                      <% images << asset_path(p.image) %>
+                    <% end %>
+                  <% elsif p.respond_to?(:file) && p.file.present? %>
+                    <% images << asset_path(p.file) %>
+                  <% elsif p.respond_to?(:filename) && p.filename.present? %>
+                    <% images << asset_path(p.filename) %>
+                  <% elsif p.respond_to?(:path) && p.path.present? %>
+                    <% images << asset_path(p.path) %>
+                  <% end %>
+                <% end %>
+              <% end %>
+
+              <% if images.any? %>
+                <% images.each_with_index do |src, i| %>
+                  <img src="<%= src %>"
+                      alt="<%= "#{@gallery.title} – photo #{i+1}" %>"
+                      class="gal-slide <%= 'is-active' if i.zero? %>"
+                      loading="<%= i.zero? ? 'eager' : 'lazy' %>">
+                <% end %>
+              <% elsif @gallery.cover.present? %>
+                <%= image_tag @gallery.cover, alt: @gallery.title, class: "gal-slide is-active" %>
+              <% else %>
+                <div class="cover-placeholder">Aucune image</div>
+              <% end %>
+            </div>
+          </div>
         <h2 class="gal-name"><%= @gallery.title %></h2>
       <% end %>
     </div>
@@ -119,7 +151,7 @@
     <div class="medias-piece">
       <p class="piece-author"><span>Vidéos de la Pièce :</span></p>
       <% @piece.videos.order(position: :asc, created_at: :asc).each do |v| %>
-        <div class="video-card" data-videothumb-target="card">
+        <div class="video-card video-card--large" data-videothumb-target="card">
           <div class="thumb-wrap"
               data-action="click->videomodal#open"
               data-video-url="<%= asset_path(v.file) %>">
