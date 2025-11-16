@@ -4,6 +4,25 @@
     <div class="spotlight"></div>
     <h1 class="asso-title"><%= @member.first_name.capitalize %>&nbsp;&nbsp;<%= @member.last_name.titleize %></h1>
   </div>
+  <% if @band_photos.present? %>
+    <div class="member-photo-band">
+      <div class="member-photo-track">
+        <% 2.times do %> <!-- duplication pour la boucle infinie -->
+          <% @band_photos.each do |photo| %>
+            <% src = photo_band_src(photo) %>
+            <% next if src.blank? %>
+
+            <div class="member-photo-frame">
+              <img src="<%= src %>"
+                  alt="<%= photo.caption.presence || @member.first_name %>"
+                  class="member-photo-img">
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <% if (@member.active == true) %>
     <p class="piece-author"><span><%= @member.fonction %> de l 'association depuis <%= @member.year_start %></span></p>
   <% else %>

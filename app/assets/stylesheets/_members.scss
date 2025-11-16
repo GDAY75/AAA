@@ -126,3 +126,54 @@
   margin-bottom: 6px;
   margin-inline: 7rem;
 }
+
+/* ===== Bandeau horizontal de photos pour la show de member ===== */
+.member-photo-band {
+  width: 100%;
+  height: 40vh;        /* 25% de la hauteur de l’écran */
+  overflow: hidden;
+  position: relative;
+  background: #000;
+  margin: 24px auto 40px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+
+/* La piste qui défile */
+.member-photo-track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+  animation: member-photo-scroll 30s linear infinite;
+  /* tu peux mettre 20s ou 15s pour aller plus vite */
+}
+
+/* Chaque "case" de photo */
+.member-photo-frame {
+  flex: 0 0 auto;
+  height: 100%;
+}
+
+/* La photo remplit toute la hauteur du bandeau, visible en entier */
+.member-photo-img {
+  height: 100%;
+  width: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Animation : on fait défiler jusqu’à la moitié (puisque on a doublé le contenu) */
+@keyframes member-photo-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Optionnel : léger ajustement sur mobile */
+@media (max-width: 768px) {
+  .member-photo-band {
+    height: 22vh;
+  }
+}
