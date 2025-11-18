@@ -18,14 +18,20 @@ class MembersController < ApplicationController
                         .where(galleries: { category: "Répètes" })
 
     # ⚡ Condition B : photos de pièce liées aux rôles
-    role_photos = Photo.joins(:gallery)
-                      .where(
-                        member_roles.map {
-                          "photos.caption ILIKE ?"
-                        }.join(" OR "),
-                        *member_roles.map { |r| "%#{r}%" }
-                      )
-                      .where(galleries: { category: "Pièce" })
+    if @member.fonction == "Metteur en scène"
+      role_photos = Photo.joins(:gallery)
+                        .where("photos.caption ILIKE ?", "%#{@member.first_name}%")
+                        .where(galleries: { category: "Pièce" })
+    else
+      role_photos = Photo.joins(:gallery)
+                        .where(
+                          member_roles.map {
+                            "photos.caption ILIKE ?"
+                          }.join(" OR "),
+                          *member_roles.map { |r| "%#{r}%" }
+                        )
+                        .where(galleries: { category: "Pièce" })
+    end
 
     # ⚡ Fusion + échantillonnage aléatoire
     @band_photos = (repete_photos + role_photos).uniq.sample(10)
