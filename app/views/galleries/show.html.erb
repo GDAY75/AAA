@@ -14,23 +14,51 @@
     </div>
   <% end %>
 
-  <!-- Source plate (les items sont rendus une fois) -->
   <div class="photos-source" data-masonry-target="source">
     <% @photos.each_with_index do |photo, idx| %>
+      <% public_id = photo[:image] %> <!-- ⚠️ bien photo[:image] et pas photo.image -->
+      <% next if public_id.blank? %>
+
+      <% caption = (photo.caption.presence || @gallery.title) %>
+
+      <%# URL grande pour la lightbox %>
+      <% full_url = Cloudinary::Utils.cloudinary_url(
+        public_id,
+        width: 1920,
+        height: 1080,
+        crop: :fit,
+        fetch_format: :auto,
+        quality: :auto
+      ) %>
+
+      <%# URL thumb plus légère pour la grille %>
+      <% thumb_url = Cloudinary::Utils.cloudinary_url(
+        public_id,
+        width: 800,
+        height: 800,
+        crop: :fill,
+        fetch_format: :auto,
+        quality: :auto
+      ) %>
+
       <%= link_to "#",
           class: "photo-tile",
           data: {
-            masonry_item: true,           # <- marque l’item à placer
+            masonry_item: true,
             action: "click->lightbox#open",
             lightbox_target: "thumb",
             index: idx,
-            image_url: asset_path(photo.image),
-            caption: (photo.caption.presence || @gallery.title)
+            image_url: full_url,
+            caption: caption
           } do %>
-        <%= image_tag photo.image, alt: (photo.caption.presence || @gallery.title) %>
+
+        <%= image_tag thumb_url,
+            alt: caption,
+            loading: "lazy" %>
       <% end %>
     <% end %>
   </div>
+
 
   <!-- Conteneur des colonnes générées par Stimulus -->
   <div class="photos-grid" data-masonry-target="grid"></div>
@@ -42,6 +70,7 @@
     <!-- Boutons navigation -->
     <button class="lightbox-prev" type="button" data-action="click->lightbox#prev" aria-label="Précédente"><i class="fa-solid fa-chevron-left"></i></button>
     <button class="lightbox-next" type="button" data-action="click->lightbox#next" aria-label="Suivante"><i class="fa-solid fa-chevron-right"></i></button>
+
     <!-- Outils de zoom -->
     <div class="lightbox-tools">
       <button type="button" class="tool-btn" data-action="click->lightbox#zoomOut">−</button>
