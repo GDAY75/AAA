@@ -35,8 +35,7 @@
       <% thumb_url = Cloudinary::Utils.cloudinary_url(
         public_id,
         width: 800,
-        height: 800,
-        crop: :fill,
+        crop: :fit,
         fetch_format: :auto,
         quality: :auto
       ) %>

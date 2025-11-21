@@ -17,20 +17,16 @@
 
               <% if g.respond_to?(:photos) %>
                 <% g.photos.to_a.sample(6).each do |p| %>
-                  <%# ActiveStorage ou colonne String : on gère les deux sans planter %>
-                  <% if p.respond_to?(:image) && p.image.present? %>
-                    <% if p.image.respond_to?(:attached?) && p.image.attached? %>
-                      <% images << url_for(p.image) %>
-                    <% else %>
-                      <% images << asset_path(p.image) %>
-                    <% end %>
-                  <% elsif p.respond_to?(:file) && p.file.present? %>
-                    <% images << asset_path(p.file) %>
-                  <% elsif p.respond_to?(:filename) && p.filename.present? %>
-                    <% images << asset_path(p.filename) %>
-                  <% elsif p.respond_to?(:path) && p.path.present? %>
-                    <% images << asset_path(p.path) %>
-                  <% end %>
+                  <% public_id = p[:image] %>
+                  <% next if public_id.blank? %>
+
+                  <% images << Cloudinary::Utils.cloudinary_url(
+                    public_id,
+                    width: 800,
+                    crop: :fit,
+                    fetch_format: :auto,
+                    quality: :auto
+                  ) %>
                 <% end %>
               <% end %>
 
@@ -41,12 +37,16 @@
                       class="gal-slide <%= 'is-active' if i.zero? %>"
                       loading="<%= i.zero? ? 'eager' : 'lazy' %>">
                 <% end %>
+
               <% elsif g.cover.present? %>
+                <%# Si tu veux aussi passer le cover via Cloudinary un jour, on adaptera %>
                 <%= image_tag g.cover, alt: g.title, class: "gal-slide is-active" %>
+
               <% else %>
                 <div class="cover-placeholder">Aucune image</div>
               <% end %>
             </div>
+
           </div>
           <h2 class="gal-name"><%= g.title %></h2>
         <% end %>
