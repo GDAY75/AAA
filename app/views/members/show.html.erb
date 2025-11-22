@@ -9,8 +9,16 @@
       <div class="member-photo-track">
         <% 2.times do %> <!-- duplication pour la boucle infinie -->
           <% @band_photos.each do |photo| %>
-            <% src = photo_band_src(photo) %>
-            <% next if src.blank? %>
+            <% public_id = photo[:image] %>
+            <% next if public_id.blank? %>
+
+            <% src = Cloudinary::Utils.cloudinary_url(
+              public_id,
+              height: 400,             # adapte si tu veux une autre hauteur
+              crop: :fill,
+              fetch_format: :auto,
+              quality: :auto
+            ) %>
 
             <div class="member-photo-frame">
               <img src="<%= src %>"
@@ -22,6 +30,7 @@
       </div>
     </div>
   <% end %>
+
 
   <% if (@member.active == true) %>
     <p class="piece-author"><span><%= @member.fonction %> de l 'association depuis <%= @member.year_start %></span></p>
