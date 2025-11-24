@@ -39,8 +39,19 @@ export default class extends Controller {
     document.body.style.overflow = ""
     this.zoomReset()
   }
-  next() { if (!this.items.length) return; this.current = (this.current + 1) % this.items.length; this.show(this.current, true) }
-  prev() { if (!this.items.length) return; this.current = (this.current - 1 + this.items.length) % this.items.length; this.show(this.current, true) }
+  
+  next() {
+    if (!this.items.length) return;
+    this.current = (this.current + 1) % this.items.length;
+    this.show(this.current);        // ⬅ garde le défaut keepZoom = false
+  }
+
+  prev() {
+    if (!this.items.length) return;
+    this.current = (this.current - 1 + this.items.length) % this.items.length;
+    this.show(this.current);        // ⬅ idem
+  }
+
   show(index, keepZoom = false) {
     const it = this.items[index]; if (!it) return
     this.imageTarget.src = it.url
