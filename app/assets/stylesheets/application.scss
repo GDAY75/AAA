@@ -1,3 +1,5 @@
+@import "css_math_helpers";
+
 // Graphical variables
 @import "config/fonts";
 @import "config/colors";
@@ -13,7 +15,7 @@
 
 @import "pieces";
 @import "members";
-@import "css_math_helpers";
+
 
 
 body{

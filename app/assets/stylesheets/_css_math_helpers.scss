@@ -1,3 +1,18 @@
-@function css-min($args...)   { @return unquote("min(#{$args})"); }
-@function css-max($args...)   { @return unquote("max(#{$args})"); }
-@function css-clamp($min, $val, $max) { @return unquote("clamp(#{$min}, #{$val}, #{$max})"); }
+// Helpers pour forcer Sass à laisser passer les fonctions CSS min()/clamp()
+// sans essayer de faire des maths vw/px.
+
+// min() CSS
+@function css-min($a, $b) {
+  @return unquote("min(#{$a}, #{$b})");
+}
+
+// clamp() CSS
+@function css-clamp($min, $preferred, $max) {
+  @return unquote("clamp(#{$min}, #{$preferred}, #{$max})");
+}
+
+// (optionnel) max() CSS au cas où tu en aurais besoin un jour
+@function css-max($a, $b) {
+  @return unquote("max(#{$a}, #{$b})");
+}
+

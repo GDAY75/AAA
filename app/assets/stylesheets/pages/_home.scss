@@ -97,8 +97,8 @@
   position: relative;
   margin: 24px auto 32px;
   margin-bottom: 4rem;
-  padding: clamp(12px, 1vw, 1px) clamp(16px, 3vw, 48px);
-  max-width: min(1100px, 90vw);
+  padding: css-clamp(12px, 1vw, 1px) css-clamp(16px, 3vw, 48px);
+  max-width: css-min(1100px, 90vw);
   text-align: center;
   border-radius: 16px;
   background:
