@@ -41,6 +41,7 @@ Rails.application.configure do
   # Compress CSS using a preprocessor.
   # Désactiver la compression CSS pour éviter le bug SassC 'vw' vs 'px'
   config.assets.css_compressor = nil
+  config.assets.js_compressor = nil
 
 
   # Do not fall back to assets pipeline if a precompiled asset is missed.
