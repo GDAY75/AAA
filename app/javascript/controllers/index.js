@@ -1,18 +1,17 @@
-import { Application } from "@hotwired/stimulus"
+// app/javascript/controllers/index.js
+import { application } from "controllers/application"
 
-import SidebarController from "./sidebar_controller.js"
-import LightboxController from "./lightbox_controller.js"
-import MasonryController from "./masonry_controller.js"
-import VideothumbController from "./videothumb_controller.js"
-import VideomodalController from "./videomodal_controller.js"
-import GalcoverController from "./galcover_controller.js"
+import SidebarController from "controllers/sidebar_controller"
+import LightboxController from "controllers/lightbox_controller"
+import MasonryController from "controllers/masonry_controller"
+import VideothumbController from "controllers/videothumb_controller"
+import VideomodalController from "controllers/videomodal_controller"
+import GalcoverController from "controllers/galcover_controller"
 
-const application = Application.start()
-
+// On enregistre les contrôleurs Stimulus
 application.register("sidebar", SidebarController)
 application.register("lightbox", LightboxController)
 application.register("masonry", MasonryController)
 application.register("videothumb", VideothumbController)
 application.register("videomodal", VideomodalController)
 application.register("galcover", GalcoverController)
-
