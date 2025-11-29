@@ -15,6 +15,7 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Settings specified here will take precedence over those in config/application.rb.
 
