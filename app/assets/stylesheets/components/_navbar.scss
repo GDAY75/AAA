@@ -11,7 +11,7 @@
   left: 0;
   width: var(--left-curtain-width);
   height: 100vh;
-  background: url("rideau.png") no-repeat center center;
+  background: var(--rideau-bg) no-repeat center center;
   background-size: auto 100%;         /* visible en entier en hauteur */
   background-position: center center; /* rogne sur les côtés si besoin */
   z-index: 999;                       /* sous la sidebar (1000) mais au-dessus du contenu */
@@ -26,7 +26,7 @@
   right: 0;
   width: var(--sidebar-width);
   height: 100vh;               /* prend toute la hauteur */
-  background: url("rideau.png") no-repeat center center;
+  background: var(--rideau-bg) no-repeat center center;
   background-size: auto 100%;
   background-position: center center;
   color: white;

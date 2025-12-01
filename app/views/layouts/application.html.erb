@@ -8,6 +8,11 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <style>
+      :root {
+        --rideau-bg: url("<%= cl_image_path 'rideau_nhhqpa' %>");
+      }
+    </style>
   </head>
 
   <body data-controller="sidebar videomodal videothumb">
