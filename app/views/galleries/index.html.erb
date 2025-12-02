@@ -37,11 +37,6 @@
                       class="gal-slide <%= 'is-active' if i.zero? %>"
                       loading="<%= i.zero? ? 'eager' : 'lazy' %>">
                 <% end %>
-
-              <% elsif g.cover.present? %>
-                <%# Si tu veux aussi passer le cover via Cloudinary un jour, on adaptera %>
-                <%= image_tag g.cover, alt: g.title, class: "gal-slide is-active" %>
-
               <% else %>
                 <div class="cover-placeholder">Aucune image</div>
               <% end %>
