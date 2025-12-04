@@ -4,7 +4,7 @@
       <% if ((member.fonction == "Comédien" || member.fonction == "Comédienne") && member.year_end == 2025) %>
         <div class="comedien-container">
           <%= link_to member_path(member) do %>
-            <%= image_tag member_asset_image(member), alt: member.first_name, class: "comedien-photo" %>
+            <%= cl_image_tag member_asset_image(member), alt: member.first_name, class: "comedien-photo" %>
           <% end %>
           <span class="comedien-name"><%= member.first_name %></span>
         </div>
@@ -21,7 +21,7 @@
   <div class="presentation">
     <p class="piece-author">Créée en 2022 par d 'anciens élèves de l 'école de théâtre Lizart à Paris, l ' Association des Acteurs Anonymes (ou AAA pour les intimes) a pour but de permettre à des comédiens amateurs de monter et de jouer des pièces de théâtres.</p>
     <div class="presentation-photo">
-      <%= image_tag "aaa_origine.jpg" %>
+      <%= cl_image_tag "aaa_origine" %>
     </div>
     <p class="piece-author">
       Nous répétons toutes les semaines au théâtre du Gouvernail à Paris sous la mise en scène de&nbsp;&nbsp;
@@ -30,17 +30,17 @@
     </p>
 
     <div class="presentation-photo">
-      <%= image_tag "anais.jpg" %>
+      <%= cl_image_tag "anais" %>
     </div>
     <p class="piece-author">Nous sommes une troupe qui rime avec Engagement, Motivation et Bienveillance. Nous sommes des comédiens, des artistes, des personnes qui aiment jouer et s'amuser, et aussi et surtout ... nos sommes des Amis. </p>
     <div class="presentation-photo">
-      <%= image_tag "aaa_friends.jpg" %>
+      <%= cl_image_tag "aaa_friends" %>
     </div>
   </div>
   <div class="photo-credit">
     <span>De nombreuses photos du site ont été prises par :</span>
     <%= link_to "https://horo-photographie.com/", target: "_blank", rel: "noopener" do %>
-      <%= image_tag "photographe.png", alt: "Horo Photographie", class: "photo-credit__logo" %>
+      <%= cl_image_tag "photographe", alt: "Horo Photographie", class: "photo-credit__logo" %>
     <% end %>
   </div>
 </div>
