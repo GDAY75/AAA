@@ -9,7 +9,7 @@
     <div class="photo-credit">
       <span>Photos prises par :</span>
       <%= link_to "https://horo-photographie.com/", target: "_blank", rel: "noopener" do %>
-        <%= image_tag "photographe.png", alt: "Horo Photographie", class: "photo-credit__logo" %>
+        <%= cl_image_tag "photographe", alt: "Horo Photographie", class: "photo-credit__logo" %>
       <% end %>
     </div>
   <% end %>
