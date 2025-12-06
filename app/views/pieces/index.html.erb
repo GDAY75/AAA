@@ -11,7 +11,7 @@
           <%= link_to piece_path(piece), class: "piece-card" do %>
             <div class="poster-wrap">
               <% if piece.affiche.present? %>
-                <%= image_tag piece.affiche, alt: piece.title %>
+                <%= cl_image_tag piece.affiche, alt: piece.title %>
               <% else %>
                 <div class="poster-placeholder">Affiche à venir</div>
               <% end %>
