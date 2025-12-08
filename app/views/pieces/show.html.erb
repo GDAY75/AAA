@@ -1,8 +1,8 @@
 <div class="piece-show" data-sidebar-target="pieces">
 
   <%# --- Bannière : on utilise l'affiche v2 nommée "<TITRE> 2.JPG" --- %>
-  <% banner_name = @piece.title.parameterize.underscore + "_2.jpg" %>
-  <div class="piece-banner" style="background-image: url('<%= asset_path(banner_name) %>')">
+  <% banner_name = @piece.title.parameterize.underscore + "_2" %>
+  <div class="piece-banner" style="background-image: url('<%= cl_image_path(banner_name) %>')">
     <h1 class="piece-banner__title"><%= @piece.title %></h1>
   </div>
 
@@ -51,7 +51,7 @@
             x="0" y="0" width="100" height="100"
             preserveAspectRatio="xMidYMid slice"
             clip-path="url(#starClip)"
-            xlink:href="<%= asset_path(@piece.title.parameterize.underscore + '_3.jpg') %>" />
+            xlink:href="<%= cl_image_path(@piece.title.parameterize.underscore + '_3') %>" />
 
           <!-- Bordure dorée -->
           <polygon class="star-stroke" points="
@@ -86,7 +86,7 @@
                 <div class="member-role">
                   <% if casting.photo.present? %>
                     <div class="casting-photo-oval">
-                      <%= image_tag casting.photo, alt: casting.role, class: "oval-img" %>
+                      <%= cl_image_tag casting.photo, alt: casting.role, class: "oval-img" %>
                     </div>
                   <% end %>
                   <div class="role-name"><%= casting.role %></div>
@@ -133,7 +133,7 @@
                       loading="<%= i.zero? ? 'eager' : 'lazy' %>">
                 <% end %>
               <% elsif @gallery.cover.present? %>
-                <%= image_tag @gallery.cover, alt: @gallery.title, class: "gal-slide is-active" %>
+                <%= cl_image_tag @gallery.cover, alt: @gallery.title, class: "gal-slide is-active" %>
               <% else %>
                 <div class="cover-placeholder">Aucune image</div>
               <% end %>
