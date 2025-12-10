@@ -58,6 +58,9 @@
 
 @media (max-width: 768px) {
   .curtain-left { display: none !important; }
+  :root {
+    --sidebar-width: 100vw;
+  }
 }
 
 /* Écrans un peu bas */
