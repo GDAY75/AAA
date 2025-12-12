@@ -25,7 +25,7 @@
   top: 0;
   right: 0;
   width: var(--sidebar-width);
-  height: 100vh;               /* prend toute la hauteur */
+  height: 100vh;
   background: var(--rideau-bg) no-repeat center center;
   background-size: auto 100%;
   background-position: center center;
@@ -36,14 +36,33 @@
   align-items: center;
 
   padding: 16px 10px 20px;
-  transition: width 0.3s ease;
+  transition: width 0.3s ease;  // ← desktop
   z-index: 1000;
 
-  overflow: hidden;            /* ✅ pas de scroll interne */
+  overflow: hidden;
 }
 
 .sidebar.collapsed {
   width: var(--sidebar-width-collapsed);
+}
+
+@media (max-width: 768px) {
+  .curtain-left {
+    display: none !important;
+  }
+
+  /* La sidebar est overlay à droite, visible en permanence */
+  .sidebar {
+    width: 100vw;            /* ouverte : plein écran */
+    right: 0;
+    transform: none;         /* ❌ on enlève translateX(100%) */
+    transition: width 0.3s ease;
+  }
+
+  /* En mode collapsed, elle devient une barre étroite */
+  .sidebar.collapsed {
+    width: 80px;
+  }
 }
 
 .toggle-btn {
@@ -54,13 +73,6 @@
   font-weight: bolder;
   cursor: pointer;
   z-index: 1001;
-}
-
-@media (max-width: 768px) {
-  .curtain-left { display: none !important; }
-  :root {
-    --sidebar-width: 100vw;
-  }
 }
 
 /* Écrans un peu bas */
