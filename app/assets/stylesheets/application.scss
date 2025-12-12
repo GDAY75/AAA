@@ -22,3 +22,12 @@ body{
   background-color: black;
   color: gold;
 }
+
+@media (max-width: 768px) {
+
+  /* Le contenu de l'app */
+  .app-wrapper {
+    margin-right: 80px;
+    transition: margin-right 0.3s ease;
+  }
+}
