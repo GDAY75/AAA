@@ -51,23 +51,18 @@
 
 /* ===== MOBILE (mode light overlay) ===== */
 @media (max-width: 768px) {
-  .curtain-left {
-    display: none !important;
-  }
+  .curtain-left { display: none !important; }
 
   .sidebar {
-    width: 85vw;              /* sidebar "ouverte" */
-    max-width: 340px;
+    width: 100vw;              /* ✅ open = plein écran */
     right: 0;
-
-    /* ✅ perf mobile : on anime transform, pas width */
     transform: translateX(0);
     transition: transform 0.25s ease;
     will-change: transform;
   }
 
   .sidebar.collapsed {
-    /* ne laisse visible qu'une petite tranche */
+    /* ✅ visible 80px */
     transform: translateX(calc(100% - 80px));
   }
 }

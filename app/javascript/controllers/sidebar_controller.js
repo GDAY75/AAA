@@ -39,14 +39,19 @@ export default class extends Controller {
 
     // ✅ Mobile = mode light => AUCUNE marge appliquée au contenu
     if (isMobile) {
-      this.clearLR(this.bannerTarget)
-      this.clearLR(this.piecesTarget)
-      this.clearLR(this.membersTarget)
-      this.clearLR(this.galleriesTarget)
-      this.clearLR(this.videosTarget)
-      this.clearLR(this.contactTarget)
+      const rightWidth = isCollapsed ? "80px" : "0px"
+      const leftWidth  = "0px"
+
+      this.applyLR(this.bannerTarget, leftWidth, rightWidth)
+      this.applyLR(this.piecesTarget, leftWidth, rightWidth)
+      this.applyLR(this.membersTarget, leftWidth, rightWidth)
+      this.applyLR(this.galleriesTarget, leftWidth, rightWidth)
+      this.applyLR(this.videosTarget, leftWidth, rightWidth)
+      this.applyLR(this.contactTarget, leftWidth, rightWidth)
+
       return
     }
+
 
     // Desktop = marges comme avant
     const rightWidth = isCollapsed ? "80px" : "220px"
