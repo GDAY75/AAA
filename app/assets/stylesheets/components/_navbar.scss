@@ -1,67 +1,74 @@
 :root {
-  --sidebar-width: 220px;
-  --sidebar-width-collapsed: 80px;
-  --left-curtain-width: 220px;
-  --left-curtain-width-collapsed: 80px;
+  --sidebar-open: 220px;
+  --sidebar-collapsed: 80px;
+
+  --left-curtain-open: 220px;
+  --left-curtain-collapsed: 80px;
 }
+
+/* ===== DESKTOP (comportement de base) ===== */
 
 .curtain-left {
   position: fixed;
   top: 0;
   left: 0;
-  width: var(--left-curtain-width);
+  width: var(--left-curtain-open);
   height: 100vh;
   background: var(--rideau-bg) no-repeat center center;
-  background-size: auto 100%;         /* visible en entier en hauteur */
-  background-position: center center; /* rogne sur les côtés si besoin */
-  z-index: 999;                       /* sous la sidebar (1000) mais au-dessus du contenu */
+  background-size: auto 100%;
+  z-index: 999;
   transition: width 0.3s ease;
   transform: scaleX(-1);
-  transform-origin: center;
 }
 
 .sidebar {
   position: fixed;
   top: 0;
   right: 0;
-  width: var(--sidebar-width);
+  width: var(--sidebar-open);
   height: 100vh;
   background: var(--rideau-bg) no-repeat center center;
   background-size: auto 100%;
-  background-position: center center;
-  color: white;
+  z-index: 1000;
+  overflow: hidden;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-
   padding: 16px 10px 20px;
-  transition: width 0.3s ease;  // ← desktop
-  z-index: 1000;
 
-  overflow: hidden;
+  transition: width 0.3s ease; /* ✅ desktop comme avant */
 }
 
 .sidebar.collapsed {
-  width: var(--sidebar-width-collapsed);
+  width: var(--sidebar-collapsed);
 }
 
+.sidebar.collapsed ~ .curtain-left,
+.curtain-left.is-collapsed {
+  width: var(--left-curtain-collapsed);
+}
+
+/* ===== MOBILE (mode light overlay) ===== */
 @media (max-width: 768px) {
   .curtain-left {
     display: none !important;
   }
 
-  /* La sidebar est overlay à droite, visible en permanence */
   .sidebar {
-    width: 100vw;            /* ouverte : plein écran */
+    width: 85vw;              /* sidebar "ouverte" */
+    max-width: 340px;
     right: 0;
-    transform: none;         /* ❌ on enlève translateX(100%) */
-    transition: width 0.3s ease;
+
+    /* ✅ perf mobile : on anime transform, pas width */
+    transform: translateX(0);
+    transition: transform 0.25s ease;
+    will-change: transform;
   }
 
-  /* En mode collapsed, elle devient une barre étroite */
   .sidebar.collapsed {
-    width: 80px;
+    /* ne laisse visible qu'une petite tranche */
+    transform: translateX(calc(100% - 80px));
   }
 }
 
