@@ -5,6 +5,11 @@ export default class extends Controller {
 
   connect() {
     this.updateLayout = this.updateLayout.bind(this)
+
+    const collapsed = this.sidebarTarget.classList.contains("collapsed")
+    document.body.classList.toggle("is-collapsed", collapsed)
+    document.body.classList.toggle("is-open", !collapsed)
+
     this.updateLayout()
     window.addEventListener("resize", this.updateLayout, { passive: true })
   }
@@ -14,7 +19,11 @@ export default class extends Controller {
   }
 
   toggle() {
-    this.sidebarTarget.classList.toggle("collapsed")
+    const collapsed = this.sidebarTarget.classList.toggle("collapsed") // ✅ UNE seule fois
+
+    document.body.classList.toggle("is-collapsed", collapsed)
+    document.body.classList.toggle("is-open", !collapsed)
+
     this.updateLayout()
   }
 
@@ -36,43 +45,5 @@ export default class extends Controller {
         this.leftCurtainTarget.classList.toggle("is-collapsed", isCollapsed)
       }
     }
-
-    // ✅ Mobile = mode light => AUCUNE marge appliquée au contenu
-    if (isMobile) {
-      this.clearLR(this.bannerTarget)
-      this.clearLR(this.piecesTarget)
-      this.clearLR(this.membersTarget)
-      this.clearLR(this.galleriesTarget)
-      this.clearLR(this.videosTarget)
-      this.clearLR(this.contactTarget)
-      return
-    }
-
-    // Desktop = marges comme avant
-    const rightWidth = isCollapsed ? "80px" : "220px"
-    const leftWidth  = isCollapsed ? "80px" : "220px"
-
-    this.applyLR(this.bannerTarget, leftWidth, rightWidth)
-    this.applyLR(this.piecesTarget, leftWidth, rightWidth)
-    this.applyLR(this.membersTarget, leftWidth, rightWidth)
-    this.applyLR(this.galleriesTarget, leftWidth, rightWidth)
-    this.applyLR(this.videosTarget, leftWidth, rightWidth)
-    this.applyLR(this.contactTarget, leftWidth, rightWidth)
-  }
-
-  applyLR(el, leftWidth, rightWidth) {
-    if (!el) return
-    el.style.marginLeft  = leftWidth
-    el.style.marginRight = rightWidth
-    el.style.width = `calc(100% - (${leftWidth} + ${rightWidth}))`
-    el.style.transition = "margin 0.3s ease, width 0.3s ease"
-  }
-
-  clearLR(el) {
-    if (!el) return
-    el.style.marginLeft = ""
-    el.style.marginRight = ""
-    el.style.width = ""
-    el.style.transition = ""
   }
 }

@@ -24,10 +24,44 @@ body{
 }
 
 @media (max-width: 768px) {
+  /* rideau gauche inexistant en mobile */
+  .curtain-left { display: none !important; }
+
+  /* contenu : aucune marge/padding à gauche */
+  body, .app-wrapper, main {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  /* si tu as un conteneur global */
+  .container, .container-fluid {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
 
   /* Le contenu de l'app */
   .app-wrapper {
-    margin-right: 80px;
+    margin-right: 80px !important;
     transition: margin-right 0.3s ease;
   }
+
+  :root {
+    --content-left: 0px;
+    --left-curtain-open: 0px;
+    --left-curtain-collapsed: 0px;
+  }
+}
+
+
+/* Desktop : contenu s’adapte tout seul */
+.app-wrapper {
+  margin-left: 220px;   /* rideau gauche */
+  margin-right: 220px;  /* sidebar ouverte */
+  transition: margin 0.3s ease;
+}
+
+/* Desktop : quand sidebar réduite (et rideau réduit aussi si tu veux) */
+body.is-collapsed .app-wrapper {
+  margin-left: 80px;
+  margin-right: 80px;
 }
