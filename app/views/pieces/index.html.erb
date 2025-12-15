@@ -8,7 +8,7 @@
     <% if @pieces.any? %>
       <div class="pieces-grid">
         <% @pieces.each do |piece| %>
-          <%= link_to piece_path(piece), class: "piece-card" do %>
+          <%= link_to piece_path(piece), class: "piece-card", data: { turbo_frame: "_top" } do %>
             <div class="poster-wrap">
               <% if piece.affiche.present? %>
                 <%= cl_image_tag piece.affiche, alt: piece.title %>

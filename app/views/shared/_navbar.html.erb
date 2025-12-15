@@ -9,7 +9,7 @@
     </div>
 
     <div class="logo-frame">
-      <%= link_to root_path, class: "navbar-brand" do %>
+      <%= link_to root_path, class: "navbar-brand", data: { turbo_frame: "_top" } do %>
         <%= cl_image_tag "aaa_logo_dwmvzg", class: "logo-img", alt: "Logo AAA" %>
       <% end %>
     </div>
@@ -29,31 +29,31 @@
         </li>
       <% else %>
         <li>
-          <%= link_to members_path, class: "nav-link" do %>
+          <%= link_to members_path, class: "nav-link", data: { turbo_frame: "_top" } do %>
             <i class="fas fa-users icon-only"></i>
             <span class="link-text">La Troupe</span>
           <% end %>
         </li>
         <li>
-          <%= link_to pieces_path, class: "nav-link" do %>
+          <%= link_to pieces_path, class: "nav-link", data: { turbo_frame: "_top" } do %>
             <i class="fas fa-theater-masks icon-only"></i>
             <span class="link-text">Les Pièces</span>
           <% end %>
         </li>
         <li>
-          <%= link_to galleries_path, class: "nav-link" do %>
+          <%= link_to galleries_path, class: "nav-link", data: { turbo_frame: "_top" } do %>
             <i class="fas fa-images icon-only"></i>
             <span class="link-text">Galeries</span>
           <% end %>
         </li>
         <li>
-          <%= link_to videos_path, class: "nav-link" do %>
+          <%= link_to videos_path, class: "nav-link", data: { turbo_frame: "_top" } do %>
             <i class="fas fa-film icon-only"></i>
             <span class="link-text">Vidéos</span>
           <% end %>
         </li>
         <li>
-          <%= link_to contact_path, class: "nav-link" do %>
+          <%= link_to contact_path, class: "nav-link", data: { turbo_frame: "_top" } do %>
             <i class="fas fa-envelope icon-only"></i>
             <span class="link-text">Contact</span>
           <% end %>

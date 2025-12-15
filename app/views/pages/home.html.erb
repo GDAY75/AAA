@@ -3,7 +3,7 @@
     <% @members.each do |member| %>
       <% if ((member.fonction == "Comédien" || member.fonction == "Comédienne") && member.year_end == 2025) %>
         <div class="comedien-container">
-          <%= link_to member_path(member) do %>
+          <%= link_to member_path(member), data: { turbo_frame: "_top" } do %>
             <%= cl_image_tag member_asset_image(member), alt: member.first_name, class: "comedien-photo" %>
           <% end %>
           <span class="comedien-name"><%= member.first_name %></span>

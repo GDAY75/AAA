@@ -7,7 +7,7 @@
   <% if @galleries.any? %>
     <div class="galleries-grid">
       <% @galleries.each do |g| %>
-        <%= link_to gallery_path(g), class: "gal-card" do %>
+        <%= link_to gallery_path(g), class: "gal-card", data: { turbo_frame: "_top" } do %>
           <div class="gal-cover"
               data-controller="galcover"
               data-galcover-interval-value="2400"
