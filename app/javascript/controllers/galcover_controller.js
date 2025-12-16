@@ -13,6 +13,12 @@ export default class extends Controller {
     this.index = 0
     this.timer = null
 
+    // Fade-in au premier affichage (noir -> première image)
+    requestAnimationFrame(() => {
+      this.element.classList.add("is-ready")
+    })
+
+
     if (this.slides.length > 1 && this.autoplayValue) {
       this.play()
     }
@@ -30,6 +36,7 @@ export default class extends Controller {
 
   disconnect() {
     this.pause()
+    this.element.classList.remove("is-ready")
     this.element.removeEventListener("mouseenter", this._onEnter)
     this.element.removeEventListener("mouseleave", this._onLeave)
     this.element.removeEventListener("focusin", this._onEnter)
