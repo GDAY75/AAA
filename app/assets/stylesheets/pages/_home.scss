@@ -27,6 +27,8 @@
   overflow: hidden;
   /* on remplace l'ancienne largeur % de .comedien-photo par un flex-basis sur le conteneur */
   flex: 0 0 11.11%; /* 9 par ligne */
+
+  container-type: inline-size; /* ⭐ clé */
 }
 
 /* Image */
@@ -45,26 +47,30 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  padding: 8px 10px;
+  padding: 0.4em 0.5em;
+
   text-align: center;
   color: gold;
   font-weight: 600;
-  font-size: 3.4rem;
-  background: linear-gradient(400deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 50%);
+
+  /* ⭐ Taille liée à la largeur de la photo */
+  font-size: clamp(0.7rem, 28cqi, 3rem);
+
+  background: linear-gradient(
+    400deg,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0.65) 50%
+  );
+
   opacity: 0;
   transform: translateY(10%);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
+
 @media (hover: hover) {
   .comedien-container:hover .comedien-photo { transform: scale(1.05); }
   .comedien-container:hover .comedien-name  { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 1750px) {
-  .comedien-name {
-    font-size: 1.6rem;
-  }
 }
 
 /* ===== Mobile : 3 lignes × 3 colonnes ===== */
@@ -117,7 +123,7 @@
 /* Titre (Carattere déjà appliquée globalement) */
 .asso-title {
   margin: 0;
-  font-size: css-clamp(2rem, 6vw, 6rem);
+  font-size: css-clamp(3rem, 6vw, 6rem);
   line-height: 1.1;
   color: gold;
   text-shadow:
@@ -177,14 +183,15 @@
 .presentation {
   max-width: 1300px;
   margin: 60px auto;
-  padding: 30px 24px;
+  padding: 1rem;
   background: radial-gradient(circle at top, rgba(255,215,0,0.08), rgba(0,0,0,0.9));
   border: 2px solid rgba(255,215,0,0.25);
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.7), inset 0 0 20px rgba(255,215,0,0.1);
   color: #eee;
   line-height: 1.6;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
 
   display: grid;
   gap: 28px;
@@ -200,8 +207,8 @@
 
   .presentation-photo {
     display: inline-block;      /* shrink-wrap sur le contenu */
-    max-width: 80%;             /* ne dépasse jamais 80% de la largeur dispo */
-    margin: 0 auto 24px;
+    max-width: 90%;             /* ne dépasse jamais 80% de la largeur dispo */
+    margin: 0 auto 0;
     border: 3px solid gold;
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.8);
