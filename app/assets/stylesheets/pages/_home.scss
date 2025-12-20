@@ -199,10 +199,11 @@
   p {
     font-family: 'Carattere', cursive; /* cohérent avec ton thème */
     color: #e9e2d0;
-    font-size: clamp(2rem, 2vw, 10rem);
+    font-size: clamp(1.8rem, 2vw, 10rem);
     text-shadow: 0 2px 6px rgba(0,0,0,0.7);
     margin: 0;
     text-align: justify;
+    line-height: 1.2;
   }
 
   .presentation-photo {
