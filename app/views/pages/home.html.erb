@@ -4,7 +4,14 @@
       <% if ((member.fonction == "Comédien" || member.fonction == "Comédienne") && member.year_end == 2025) %>
         <div class="comedien-container">
           <%= link_to member_path(member), data: { turbo_frame: "_top" } do %>
-            <%= cl_image_tag member_asset_image(member), alt: member.first_name, class: "comedien-photo" %>
+            <%= cl_image_tag member_asset_image(member),
+              alt: member.first_name,
+              class: "comedien-photo",
+              srcset: [
+                cl_image_path(member_asset_image(member), width: 160, height: 320, crop: :fill, gravity: :auto, fetch_format: :auto, quality: :auto, dpr: :auto) + " 160w",
+                cl_image_path(member_asset_image(member), width: 260, height: 520, crop: :fill, gravity: :auto, fetch_format: :auto, quality: :auto, dpr: :auto) + " 260w"
+              ].join(", "),
+              sizes: "(max-width: 768px) 33vw, 11vw" %>
           <span class="comedien-name"><%= member.first_name %></span>
           <% end %>
         </div>
