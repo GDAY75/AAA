@@ -14,7 +14,7 @@ class MembersController < ApplicationController
 
     # ⚡ Condition A : photos de répétitions liées au prénom
     repete_photos = Photo.joins(:gallery)
-                        .where("photos.caption ILIKE ?", "%#{@member.first_name}%")
+                        .where("photos.caption ILIKE ?", "%#{@member.slug.gsub("-", " ")}%")
                         .where(galleries: { category: "Répètes" })
 
     # ⚡ Condition B : photos de pièce liées aux rôles
