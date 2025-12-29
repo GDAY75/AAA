@@ -13,9 +13,15 @@ class MembersController < ApplicationController
     member_roles = @member.castings.pluck(:role)
 
     # ⚡ Condition A : photos de répétitions liées au prénom
-    repete_photos = Photo.joins(:gallery)
-                        .where("photos.caption ILIKE ?", "%#{@member.slug.gsub("-", " ")}%")
-                        .where(galleries: { category: "Répètes" })
+    if @member.fonction == "Metteur en scène"
+      repete_photos = Photo.joins(:gallery)
+                          .where("photos.caption ILIKE ?", "%#{@member.first_name}%")
+                          .where(galleries: { category: "Répètes" })
+    else
+      repete_photos = Photo.joins(:gallery)
+                          .where("photos.caption ILIKE ?", "%#{@member.slug.gsub("-", " ")}%")
+                          .where(galleries: { category: "Répètes" })
+    end
 
     # ⚡ Condition B : photos de pièce liées aux rôles
     if @member.fonction == "Metteur en scène"
@@ -23,14 +29,18 @@ class MembersController < ApplicationController
                         .where("photos.caption ILIKE ?", "%#{@member.first_name}%")
                         .where(galleries: { category: "Pièce" })
     else
+      role_patterns = member_roles.map do |role|
+        escaped = Regexp.escape(role.to_s.strip)
+        escaped = escaped.gsub("\\ ", "\\s+") # si rôle en 2-3 mots => tolère plusieurs espaces
+        "\\m#{escaped}\\M"
+      end
+
       role_photos = Photo.joins(:gallery)
-                        .where(
-                          member_roles.map {
-                            "photos.caption ILIKE ?"
-                          }.join(" OR "),
-                          *member_roles.map { |r| "%#{r}%" }
-                        )
-                        .where(galleries: { category: "Pièce" })
+        .where(
+          role_patterns.map { "photos.caption ~* ?" }.join(" OR "),
+          *role_patterns
+        )
+        .where(galleries: { category: "Pièce" })
     end
 
     # ⚡ Fusion + échantillonnage aléatoire
