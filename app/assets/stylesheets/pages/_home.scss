@@ -26,7 +26,7 @@
   position: relative;
   overflow: hidden;
   /* on remplace l'ancienne largeur % de .comedien-photo par un flex-basis sur le conteneur */
-  flex: 0 0 11.11%; /* 9 par ligne */
+  flex: 0 0 14.28%; /* 9 par ligne */
 
   container-type: inline-size; /* ⭐ clé */
 }
