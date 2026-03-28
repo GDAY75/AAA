@@ -1,7 +1,7 @@
 class GalleriesController < ApplicationController
   skip_before_action :authenticate_user!
   def index
-    @galleries = Gallery.order(created_at: :asc)
+    @galleries = Gallery.order(year: :desc).order(Arel.sql("CASE WHEN category = 'Pièce' THEN 0 ELSE 1 END"))
   end
 
   def show
