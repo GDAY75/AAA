@@ -73,22 +73,52 @@
   .comedien-container:hover .comedien-name  { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Mobile : 3 lignes × 3 colonnes ===== */
+/* ===== Mobile : 3-3-1 avec photos de même taille ===== */
 @media (max-width: 768px) {
   .banner-images {
-    /* On passe de flex horizontal à une grille 3x3 */
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0; /* mets 6px si tu veux un espace: ex. gap: 6px; */
-    overflow-x: visible;     /* plus de scroll horizontal */
-    scroll-snap-type: none;  /* on désactive le snap horizontal */
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    overflow-x: visible;
+    scroll-snap-type: none;
     justify-content: stretch;
   }
 
-  /* On annule les largeurs/flex-basis posés pour la version desktop */
   .comedien-container {
     flex: initial;
     width: 100%;
+    grid-column: span 2; /* même taille pour toutes */
+  }
+
+  /* Ligne 1 : 3 photos */
+  .comedien-container:nth-child(1) {
+    grid-column: 1 / span 2;
+  }
+
+  .comedien-container:nth-child(2) {
+    grid-column: 3 / span 2;
+  }
+
+  .comedien-container:nth-child(3) {
+    grid-column: 5 / span 2;
+  }
+
+  /* Ligne 2 : 3 photos */
+  .comedien-container:nth-child(4) {
+    grid-column: 1 / span 2;
+  }
+
+  .comedien-container:nth-child(5) {
+    grid-column: 3 / span 2;
+  }
+
+  .comedien-container:nth-child(6) {
+    grid-column: 5 / span 2;
+  }
+
+  /* Ligne 3 : 1 photo centrée */
+  .comedien-container:nth-child(7) {
+    grid-column: 3 / span 2; /* centré */
   }
 
   .comedien-photo {
@@ -97,7 +127,6 @@
     object-fit: cover;
     object-position: top;
   }
-
 }
 
 
@@ -237,5 +266,156 @@
   &:hover {
     color: red;
     text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  }
+}
+
+/* ===== Enseigne théâtre / CTA réservation ===== */
+.home-cta-marquee {
+  display: flex;
+  justify-content: center;
+  margin: 24px auto 42px;
+  padding: 0 16px;
+}
+
+.home-cta-marquee__link {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  max-width: css-min(920px, 92vw);
+  width: 100%;
+  min-height: 82px;
+  padding: 18px 28px;
+
+  text-align: center;
+  text-decoration: none;
+
+  background:
+    linear-gradient(180deg, rgba(80, 0, 0, 0.95), rgba(35, 0, 0, 0.98));
+  border-radius: 18px;
+  border: 3px solid rgba(255, 215, 0, 0.85);
+
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.5),
+    0 0 18px rgba(255, 215, 0, 0.25),
+    inset 0 0 14px rgba(255, 255, 255, 0.06);
+
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* panneau intérieur */
+.home-cta-marquee__link::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,0.10), transparent 45%);
+  z-index: 0;
+}
+
+/* guirlande / ampoules */
+.home-cta-marquee__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  padding: 6px;
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(255, 225, 120, 1) 0deg 8deg,
+      rgba(255, 170, 0, 0.2) 8deg 16deg
+    );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: marqueeLights 3s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.home-cta-marquee__text {
+  position: relative;
+  z-index: 2;
+
+  color: gold;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  text-shadow:
+    0 2px 2px rgba(0,0,0,0.4),
+    0 0 8px rgba(255, 220, 120, 0.35);
+
+  font-size: clamp(1.1rem, 2.2vw, 2rem);
+}
+
+/* hover */
+.home-cta-marquee__link:hover {
+  transform: scale(1.02);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.6),
+    0 0 24px rgba(255, 215, 0, 0.35),
+    inset 0 0 16px rgba(255, 255, 255, 0.08);
+}
+
+.home-cta-marquee__link:hover .home-cta-marquee__text {
+  color: #ffe082;
+}
+
+/* animation des lumières */
+@keyframes marqueeLights {
+  from {
+    transform: rotate(0deg);
+    filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.7));
+  }
+  to {
+    transform: rotate(360deg);
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.95));
+  }
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .home-cta-marquee {
+    margin: 18px auto 30px;
+    padding: 0 10px;
+  }
+
+  .home-cta-marquee__link {
+    min-height: 68px;
+    padding: 14px 18px;
+    border-radius: 14px;
+  }
+
+  .home-cta-marquee__link::before {
+    inset: 8px;
+    border-radius: 10px;
+  }
+
+  .home-cta-marquee__link::after {
+    border-radius: 14px;
+    padding: 5px;
+  }
+
+  .home-cta-marquee__text {
+    font-size: clamp(0.95rem, 4.2vw, 1.2rem);
+  }
+}
+
+/* accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  .home-cta-marquee__link::after {
+    animation: none;
+  }
+
+  .home-cta-marquee__link {
+    transition: none;
   }
 }

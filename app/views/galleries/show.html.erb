@@ -5,7 +5,7 @@
     <h1 class="asso-title"><%= @gallery.title %></h1>
   </div>
 
-  <% if @gallery.category == "Répètes"%>
+  <% if @gallery.category == "Répètes" %>
     <div class="photo-credit">
       <span>Photos prises par :</span>
       <%= link_to "https://horo-photographie.com/", target: "_blank", rel: "noopener" do %>
@@ -16,25 +16,15 @@
 
   <div class="photos-source" data-masonry-target="source">
     <% @photos.each_with_index do |photo, idx| %>
-      <% public_id = photo[:image] %> <!-- ⚠️ bien photo[:image] et pas photo.image -->
+      <% public_id = photo[:image] %>
       <% next if public_id.blank? %>
 
-      <% caption = (photo.caption.presence || @gallery.title) %>
+      <% caption = photo.caption.presence || @gallery.title %>
 
-      <%# URL grande pour la lightbox %>
-      <% full_url = Cloudinary::Utils.cloudinary_url(
+      <% full_url = cl_image_path(
         public_id,
         width: 1920,
         height: 1080,
-        crop: :fit,
-        fetch_format: :auto,
-        quality: :auto
-      ) %>
-
-      <%# URL thumb plus légère pour la grille %>
-      <% thumb_url = Cloudinary::Utils.cloudinary_url(
-        public_id,
-        width: 800,
         crop: :fit,
         fetch_format: :auto,
         quality: :auto
@@ -51,26 +41,41 @@
             caption: caption
           } do %>
 
-        <%= image_tag thumb_url,
+        <%= cl_image_tag public_id,
+            width: 800,
+            crop: :fit,
+            fetch_format: :auto,
+            quality: :auto,
             alt: caption,
             loading: "lazy" %>
       <% end %>
     <% end %>
   </div>
 
-
-  <!-- Conteneur des colonnes générées par Stimulus -->
   <div class="photos-grid" data-masonry-target="grid"></div>
 
-  <!-- Lightbox (Stimulus) inchangée -->
   <div class="lightbox" data-lightbox-target="modal" aria-hidden="true">
-    <a href="#" class="lightbox-close" data-action="click->lightbox#close" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></a>
+    <a href="#"
+       class="lightbox-close"
+       data-action="click->lightbox#close"
+       aria-label="Fermer">
+      <i class="fa-solid fa-xmark"></i>
+    </a>
 
-    <!-- Boutons navigation -->
-    <button class="lightbox-prev" type="button" data-action="click->lightbox#prev" aria-label="Précédente"><i class="fa-solid fa-chevron-left"></i></button>
-    <button class="lightbox-next" type="button" data-action="click->lightbox#next" aria-label="Suivante"><i class="fa-solid fa-chevron-right"></i></button>
+    <button class="lightbox-prev"
+            type="button"
+            data-action="click->lightbox#prev"
+            aria-label="Précédente">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
 
-    <!-- Outils de zoom -->
+    <button class="lightbox-next"
+            type="button"
+            data-action="click->lightbox#next"
+            aria-label="Suivante">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
     <div class="lightbox-tools">
       <button type="button" class="tool-btn" data-action="click->lightbox#zoomOut">−</button>
       <button type="button" class="tool-btn" data-action="click->lightbox#zoomIn">+</button>
@@ -78,11 +83,12 @@
     </div>
 
     <div class="lightbox-content">
-      <!-- Viewport scroll/drag -->
       <div class="lightbox-viewport"
-          data-lightbox-target="viewport"
-          data-action="wheel->lightbox#wheelZoom click->lightbox#toggleZoom
-                        pointerdown->lightbox#panStart pointermove->lightbox#panMove pointerup->lightbox#panEnd pointercancel->lightbox#panEnd pointerleave->lightbox#panEnd">
+           data-lightbox-target="viewport"
+           data-action="wheel->lightbox#wheelZoom click->lightbox#toggleZoom
+                        pointerdown->lightbox#panStart pointermove->lightbox#panMove
+                        pointerup->lightbox#panEnd pointercancel->lightbox#panEnd
+                        pointerleave->lightbox#panEnd">
         <img data-lightbox-target="image" alt="">
       </div>
 
