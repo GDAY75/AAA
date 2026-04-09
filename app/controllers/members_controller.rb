@@ -9,10 +9,10 @@ class MembersController < ApplicationController
     @member = Member.find_by!(slug: params[:slug])
     @castings = @member.castings.includes(:piece)
     @pieces = @member.pieces.reverse
-    # ⚡ Récupère tous les rôles du member
-    member_roles = @member.castings.pluck(:role)
 
-    # ⚡ Condition A : photos de répétitions liées au prénom
+    member_roles = @member.castings.pluck(:role).compact.reject(&:blank?)
+
+    # Photos de répétitions
     if @member.fonction == "Metteur en scène"
       repete_photos = Photo.joins(:gallery)
                           .where("photos.caption ILIKE ?", "%#{@member.first_name}%")
@@ -23,28 +23,35 @@ class MembersController < ApplicationController
                           .where(galleries: { category: "Répètes" })
     end
 
-    # ⚡ Condition B : photos de pièce liées aux rôles
+    # Photos de pièce
     if @member.fonction == "Metteur en scène"
       role_photos = Photo.joins(:gallery)
                         .where("photos.caption ILIKE ?", "%#{@member.first_name}%")
                         .where(galleries: { category: "Pièce" })
-    else
+    elsif member_roles.any?
       role_patterns = member_roles.map do |role|
         escaped = Regexp.escape(role.to_s.strip)
-        escaped = escaped.gsub("\\ ", "\\s+") # si rôle en 2-3 mots => tolère plusieurs espaces
+        escaped = escaped.gsub("\\ ", "\\s+")
         "\\m#{escaped}\\M"
       end
 
       role_photos = Photo.joins(:gallery)
-        .where(
-          role_patterns.map { "photos.caption ~* ?" }.join(" OR "),
-          *role_patterns
-        )
-        .where(galleries: { category: "Pièce" })
+                        .where(
+                          role_patterns.map { "photos.caption ~* ?" }.join(" OR "),
+                          *role_patterns
+                        )
+                        .where(galleries: { category: "Pièce" })
+    else
+      role_photos = Photo.none
     end
 
-    # ⚡ Fusion + échantillonnage aléatoire
-    @band_photos = (repete_photos + role_photos).uniq.sample(10)
+    # Si pas de castings -> seulement répétitions
+    @band_photos =
+      if @member.fonction != "Metteur en scène" && member_roles.empty?
+        repete_photos.uniq.sample(10)
+      else
+        (repete_photos + role_photos).uniq.sample(10)
+      end
   end
 
 end
